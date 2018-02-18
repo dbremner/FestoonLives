@@ -33,6 +33,16 @@ static inline bool is_vowel(char x)
     return (x=='a'||x=='e'||x=='i'||x=='o'||x=='u');
 }
 
+static inline bool is_singular(E env)
+{
+    assert(env);
+    assert(env->number);
+    const bool singular = eq(env->number, "sing");
+    const bool plural = eq(env->number, "plural");
+    assert(singular || plural);
+    assert(singular != plural);
+    return singular;
+}
 
 static char buff[1000];
 static int io;
@@ -47,7 +57,7 @@ nomq(E env)
 {
     assert(env);
 	X               v = getxx("-nomq");
-	if (eq(env->number, "sing")) {
+	if (is_singular(env)) {
         if (eq(tense(), "past")) {
 			v->list.s[0] = "there was";
         }
@@ -168,10 +178,10 @@ passive(E env)
     }
 	else {
         if (eq(env->tense, "past")) {
-			v->list.s[0] = eq(env->number, "sing") ? "was" : "were";
+			v->list.s[0] = is_singular(env) ? "was" : "were";
         }
         else {
-			v->list.s[0] = eq(env->number, "sing") ? "is" : "are";
+			v->list.s[0] = is_singular(env) ? "is" : "are";
         }
 	}
 	env->passive = env->ending = "pass";
@@ -219,14 +229,14 @@ art(E env)
 		env->number = number();
     }
 	if (env->unspec == NULL && prob(0.33)) {
-        if (eq(env->number, "sing")) {
+        if (is_singular(env)) {
 			artv->list.s[0] = CHOOSE(aspecsg);
         }
         else {
 			artv->list.s[0] = CHOOSE(aspecpl);
         }
-    } else if (prob(0.50) || (env->an && eq(env->number, "sing"))) {
-        if (eq(env->number, "sing")) {
+    } else if (prob(0.50) || (env->an && is_singular(env))) {
+        if (is_singular(env)) {
 			artv->list.s[0] = env->an ? "a" : CHOOSE(aunssg);
         }
         else {
@@ -280,7 +290,7 @@ perf(E env)
 	if (eq(env->ending, "past")) {
 		perfv->list.s[0] = "had";
 	} else if (eq(env->ending, "pres")) {
-        if (eq(env->number, "sing")) {
+        if (is_singular(env)) {
 			perfv->list.s[0] = "had";
         }
         else {
@@ -305,14 +315,14 @@ prog(E env)
 		env->number = number();
     }
 	if (eq(env->ending, "pres")) {
-        if (eq(env->number, "sing")) {
+        if (is_singular(env)) {
 			progv->list.s[0] = "is";
         }
         else {
 			progv->list.s[0] = "are";
         }
 	} else if (eq(env->ending, "past")) {
-        if (eq(env->number, "sing")) {
+        if (is_singular(env)) {
 			progv->list.s[0] = "was";
         }
         else {
@@ -346,7 +356,7 @@ verb(E env)
 		env->number = number();
     }
     if (/* DISABLES CODE */ (0) && prob(0.1) && eq(env->tense, env->ending)) {
-		if (eq(env->number, "sing")) {
+		if (is_singular(env)) {
             if (eq(env->tense, "pres")) {
 				verbv->list.s[0] = "is";
             }
@@ -364,7 +374,7 @@ verb(E env)
 	} else {
 		verbv->list.s[0] = prefix();
 		verbv->list.s[1] = root();
-        if (eq(env->ending, "pres") && eq(env->number, "sing")) {
+        if (eq(env->ending, "pres") && is_singular(env)) {
 			i = 1;
         }
         else if (eq(env->ending, "pres") || eq(env->ending, "modal")) {
