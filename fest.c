@@ -37,8 +37,8 @@ static inline bool is_vowel(char x)
 static char buff[1000];
 static int io;
 static bool flag = false;
-static int eqn=0;
-static int tbl=0;
+static bool eqn = false;
+static bool tbl = false;
 static int pic=0;
 static double makeup = -1.;
 
@@ -1438,10 +1438,10 @@ main(int argc, char *argv[])
 					pic = 1;
 					continue;
 				case 't':
-					tbl = 1;
+					tbl = true;
 					continue;
 				case 'e':
-					eqn = 1;
+					eqn = true;
 					continue;
 				case 's':
 				t = atoi(argv[0]+1); argv[0][1] = '\0';
