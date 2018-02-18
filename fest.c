@@ -1043,8 +1043,7 @@ vprep(void)
 E 
 getenvq(void)
 {
-	E               v;
-	v = (E) calloc(sizeof *v, 1);
+	E v = (E) calloc(sizeof *v, 1);
     if (v == 0) {
         printf("outa room\n");
         exit(1);
@@ -1504,7 +1503,6 @@ main(int argc, char *argv[])
 void
 pr(X tree)
 {
-	int             i;
 	if (flag ) {
 		out("<");
 		out(tree->type);
@@ -1512,11 +1510,11 @@ pr(X tree)
 	}
 	if (tree->type[0] == '-') {
 		out(" ");
-		for (i = 0; tree->list.s[i]; i++) {
+		for (int i = 0; tree->list.s[i]; i++) {
 			out(tree->list.s[i]);
 		}
 	} else
-		for (i = 0; tree->list.x[i]; i++) {
+		for (int i = 0; tree->list.x[i]; i++) {
 			pr(tree->list.x[i]);
 		}
 	free(tree);
