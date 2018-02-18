@@ -1305,7 +1305,6 @@ equation(void)
 {
 	X		v = getxx("-eqn");
     static char eqnbuff[100];
-    char x;
 	static char *eqnelem[] = {"int", "sum", "prod", "union", "inter"};
 	static char *eqnfn[] = { "sin", "cos", "tan", "arc", "det",
 		"log", "exp", "f", "g", "sinh", "O", "J sub 0", "J sub 1",
@@ -1316,7 +1315,7 @@ equation(void)
 		"eta", "kappa","lambda", "mu", "omega", "x", "zeta", "inf"};
 	static char *eqnrel[] = {"=", "<=", ">=", "==", "!=", "approx"};
 
-	x = 'a' + (R)%26;
+	char x = 'a' + (R)%26;
 	sprintf(eqnbuff,"$%s from %c=%d to %s %s ( %c ) d%c %s %s$",
 		CHOOSE(eqnelem), x, (R)&077, CHOOSE(eqnval), CHOOSE(eqnfn),
 		x, x, CHOOSE(eqnrel), CHOOSE(eqnval));
@@ -1670,8 +1669,7 @@ out(char *s)
 void
 caps(int iolen)
 {
-	int             i;
-    for (i = 1; i < iolen; i++) {
+    for (int i = 1; i < iolen; i++) {
         if (buff[i - 1] == ' ' && buff[i] <= 'z' && buff[i] >= 'a') {
             buff[i] += 'A' - 'a';
         }
