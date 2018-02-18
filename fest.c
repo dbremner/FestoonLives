@@ -11,11 +11,17 @@
 #define T 0.125
 #define CHOOSE(x) (x[(R)%(sizeof x / sizeof x[0])])
 
+static inline bool is_number_unset(E env)
+{
+    assert(env);
+    return env->number == NULL;
+}
+
 static inline void set_number(E env, char *number)
 {
     assert(env);
     assert(number);
-    assert(env->number == NULL);
+    assert(is_number_unset(env));
     env->number = number;
 }
 
@@ -144,7 +150,7 @@ np(E env)
         EE nenv = empty;
 		npv->list.x[0] = nomy();
 		npv->list.x[1] = sent(&nenv);
-        if (env->number == NULL) {
+        if (is_number_unset(env)) {
 			set_number(env, "sing");
         }
 		return npv;
@@ -183,7 +189,7 @@ passive(E env)
     if (env->tense == NULL) {
 		env->tense = env->ending = tense();
     }
-    if (env->number == NULL) {
+    if (is_number_unset(env)) {
 		set_number(env, number());
     }
     if (eq(env->ending, "modal")) {
@@ -244,7 +250,7 @@ art(E env)
 		"an undue number of",
 	"a number of"};
 	X               artv = getxx("-art");
-    if (env->number == NULL) {
+    if (is_number_unset(env)) {
 		set_number(env, number());
     }
 	if (env->unspec == NULL && prob(0.33)) {
@@ -303,7 +309,7 @@ perf(E env)
     if (env->tense == NULL) {
 		env->tense = env->ending = tense();
     }
-    if (env->number == NULL) {
+    if (is_number_unset(env)) {
 		set_number(env, number());
     }
 	if (eq(env->ending, "past")) {
@@ -330,7 +336,7 @@ prog(E env)
     if (env->tense == NULL) {
 		env->tense = env->ending = tense();
     }
-    if (env->number == NULL) {
+    if (is_number_unset(env)) {
 		set_number(env, number());
     }
 	if (eq(env->ending, "pres")) {
@@ -371,7 +377,7 @@ verb(E env)
     if (env->tense == NULL) {
 		env->tense = env->ending = tense();
     }
-    if (env->number == NULL) {
+    if (is_number_unset(env)) {
 		set_number(env, number());
     }
     if (/* DISABLES CODE */ (0) && prob(0.1) && eq(env->tense, env->ending)) {
@@ -716,7 +722,7 @@ noun(E env)
 		"kin", "cule", "icle", "y", "ability", "iosos"};
 	X               nounv = getxx("-noun");
 	int             i = 0;
-    if (env->number == NULL) {
+    if (is_number_unset(env)) {
 		set_number(env, number());
     }
 	if (prob(makeup)) {
