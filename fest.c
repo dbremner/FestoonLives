@@ -1561,7 +1561,7 @@ caps(void)
 			buff[i] += 'A' - 'a';
 }
 
-void
+noreturn void
 abo(void) {
 	fprintf(stderr, "usage: festoon [-pet] [-sSEED] [SENTENCES] [%%-invented-nouns]\n");
 	exit(1);

@@ -1,6 +1,8 @@
 #ifndef FEST_H
 #define FEST_H
 
+#include <stdnoreturn.h>
+
 #define N 8
 typedef struct xyz {
     char           *type;
@@ -58,7 +60,7 @@ int main(int argc, char *argv[]);
 void pr(X tree);
 void out(char *s);
 void caps(void);
-void abo(void);
+noreturn void abo(void);
 char * splitup(char *strlab);
 
 #endif
