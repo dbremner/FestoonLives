@@ -44,6 +44,17 @@ static inline bool is_singular(E env)
     return singular;
 }
 
+static inline bool is_plural(E env)
+{
+    assert(env);
+    assert(env->number);
+    const bool singular = eq(env->number, "sing");
+    const bool plural = eq(env->number, "plural");
+    assert(singular || plural);
+    assert(singular != plural);
+    return plural;
+}
+
 static char buff[1000];
 static int io;
 static bool flag = false;
@@ -712,7 +723,7 @@ noun(E env)
 		nounv->list.s[i++] = root();
 		nounv->list.s[i++] = CHOOSE(suff);
 	}
-	if (eq(env->number, "plural")) {
+	if (is_plural(env)) {
         if (lastchar(nounv->list.s[i - 1]) == 's') {
 			nounv->list.s[i] = "es";
         }
