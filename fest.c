@@ -1316,7 +1316,7 @@ equation(void)
 	static char *eqnrel[] = {"=", "<=", ">=", "==", "!=", "approx"};
 
 	char x = 'a' + (R)%26;
-	sprintf(eqnbuff,"$%s from %c=%d to %s %s ( %c ) d%c %s %s$",
+	snprintf(eqnbuff, sizeof(eqnbuff), "$%s from %c=%d to %s %s ( %c ) d%c %s %s$",
 		CHOOSE(eqnelem), x, (R)&077, CHOOSE(eqnval), CHOOSE(eqnfn),
 		x, x, CHOOSE(eqnrel), CHOOSE(eqnval));
 	v->list.s[0] = eqnbuff;
