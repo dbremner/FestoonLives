@@ -35,7 +35,7 @@ char * root(void);
 int prob(double f);
 char * tense(void);
 char * number(void);
-X getxx(void);
+X getxx(char *type);
 X verbal(E env);
 X adverb(void);
 X adjective(void);

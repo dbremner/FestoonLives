@@ -23,8 +23,7 @@ static double makeup = -1.;
 X 
 nomq(E env)
 {
-	X               v = getxx();
-	v->type = "-nomq";
+	X               v = getxx("-nomq");
 	if (EQ(env->number, "sing")) {
 		if (EQ(tense(), "past"))
 			v->list.s[0] = "there was";
@@ -45,8 +44,7 @@ X
 rel(void)
 {
 	static char    *c[] = {"that", "which"};
-	X               v = getxx();
-	v->type = "-rel";
+	X               v = getxx("-rel");
 	v->list.s[0] = CHOOSE(c);
 	return v;
 }
@@ -54,8 +52,7 @@ rel(void)
 X 
 sent(E env)
 {
-	X               sentv = getxx();
-	sentv->type = "sent";
+	X               sentv = getxx("sent");
 	if (prob(0.09)) {
 		env->unspec = "";
 		sentv->list.x[1] = np(env);
@@ -74,8 +71,7 @@ sent(E env)
 X 
 nomy(void)
 {
-	X               v = getxx();
-	v->type = "-nomq";
+	X               v = getxx("-nomq");
 	v->list.s[0] = "the fact that";
 	return v;
 }
@@ -83,10 +79,9 @@ nomy(void)
 X 
 np(E env)
 {
-	X               npv = getxx();
+	X               npv = getxx("np");
 	EE              nenv;
 	static EE       empty;
-	npv->type = "np";
 	if (prob(0.025)) {
 		nenv = empty;
 		npv->list.x[0] = nomy();
@@ -103,9 +98,8 @@ np(E env)
 X 
 aux(E env)
 {
-	X               auxv = getxx();
+	X               auxv = getxx("aux");
 	int             i = 0;
-	auxv->type = "aux";
 	if (env->tense == 0)
 		env->tense = env->ending = tense();
 	if (prob(0.25))
@@ -120,8 +114,7 @@ aux(E env)
 X 
 passive(E env)
 {
-	X               v = getxx();
-	v->type = "-passive";
+	X               v = getxx("-passive");
 	if (env->tense == 0)
 		env->tense = env->ending = tense();
 	if (env->number == 0)
@@ -145,8 +138,7 @@ passive(E env)
 X 
 passprep(void)
 {
-	X               v = getxx();
-	v->type = "-passprep";
+	X               v = getxx("-passprep");
 	v->list.s[0] = "by";
 	return v;
 }
@@ -154,9 +146,8 @@ passprep(void)
 X 
 vp(E env)
 {
-	X               vpv = getxx();
+	X               vpv = getxx("vp");
 	int             i = 0;
-	vpv->type = "vp";
 	if (prob(0.5))
 		vpv->list.x[i++] = passive(env);
 	vpv->list.x[i++] = verbal(env);
@@ -176,8 +167,7 @@ art(E env)
 		"no",
 		"an undue number of",
 	"a number of"};
-	X               artv = getxx();
-	artv->type = "-art";
+	X               artv = getxx("-art");
 	if (env->number == 0)
 		env->number = number();
 	if (env->unspec == 0 && prob(0.33)) {
@@ -206,8 +196,7 @@ modal(E env)
 {
 	static char    *pres[] = {"can", "may", "must", "shall", "will"};
 	static char    *past[] = {"could", "might", "should", "would"};
-	X               modalv = getxx();
-	modalv->type = "-modal";
+	X               modalv = getxx("-modal");
 	if (env->tense == 0)
 		env->tense = env->ending = tense();
 	if (EQ(env->ending, "pres"))
@@ -221,8 +210,7 @@ modal(E env)
 X 
 perf(E env)
 {
-	X               perfv = getxx();
-	perfv->type = "-perf";
+	X               perfv = getxx("-perf");
 	if (env->tense == 0)
 		env->tense = env->ending = tense();
 	if (env->number == 0)
@@ -243,8 +231,7 @@ perf(E env)
 X 
 prog(E env)
 {
-	X               progv = getxx();
-	progv->type = "-prog";
+	X               progv = getxx("-prog");
 	if (env->tense == 0)
 		env->tense = env->ending = tense();
 	if (env->number == 0)
@@ -277,9 +264,8 @@ verb(E env)
 	{"esce", "esces", "esced", "esced", "escing", "esced"},
 	{"fy", "fies", "fied", "fied", "fying", "fied"},
 	{"ize", "izes", "ized", "ized", "izing", "ized"}};
-	X               verbv = getxx();
+	X               verbv = getxx("-verb");
 	int             i;
-	verbv->type = "-verb";
 	if (env->tense == 0)
 		env->tense = env->ending = tense();
 	if (env->number == 0)
@@ -612,9 +598,8 @@ noun(E env)
 		"ery", "ory", "ette", "let", "ling", "ule", "kin",
 		"ar", "or", "ist", "fulness",
 		"kin", "cule", "icle", "y", "ability", "iosos"};
-	X               nounv = getxx();
+	X               nounv = getxx("-noun");
 	int             i = 0;
-	nounv->type = "-noun";
 	if (env->number == 0)
 		env->number = number();
 	if (prob(makeup)) {
@@ -642,10 +627,9 @@ noun(E env)
 X 
 nounal(E env)
 {
-	X               nounalv = getxx();
+	X               nounalv = getxx("nounal");
 	int             i = 0;
 	X               p;
-	nounalv->type = "nounal";
 	if (prob(0.15)) {
 		nounalv->list.x[i++] = adjval();
 	}
@@ -669,9 +653,8 @@ nounal(E env)
 X 
 adjval(void)
 {
-	X               adjvalv = getxx();
+	X               adjvalv = getxx("adjval");
 	int             i = 0;
-	adjvalv->type = "adjval";
 	if (prob(0.25)) {
 		adjvalv->list.x[i++] = adverb();
 	}
@@ -751,24 +734,23 @@ number(void)
 	return prob(0.25) ? "plural" : "sing";
 }
 
-X 
-getxx(void)
+X
+getxx(char *type)
 {
-	X               rv;
-	rv = (X) calloc(sizeof *rv, 1);
+    X rv = (X) calloc(sizeof *rv, 1);
     if (rv == 0) {
         fprintf(stderr, "festoon: outa space\n");
         exit(1);
     }
-	return rv;
+    rv->type = type;
+    return rv;
 }
 
 X 
 verbal(E env)
 {
-	X               verbalv = getxx();
+	X               verbalv = getxx("verbal");
 	int             i = 0;
-	verbalv->type = "verbal";
 	if (prob(0.25))
 		verbalv->list.x[i++] = adverb();
 	verbalv->list.x[i++] = verb(env);
@@ -907,10 +889,9 @@ adverb(void)
 	static char    *suff[] = {"wardly", "ably", "wisely",
 		"ably", "ily", "ly", "ly", "ly"};
 
-	X               adverbv = getxx();
+	X               adverbv = getxx("-adverb");
 	int             i = 0;
 
-	adverbv->type = "-adverb";
 	if (prob(0.150)) {
 		adverbv->list.s[i++] = prob(.5) ? "simply" : "easily";
 		return adverbv;
@@ -934,10 +915,9 @@ adjective(void)
 	"ine", "esque", "en", "an",
 	"ile", "able", "ible", "istic", "ic",
 	"an", "ian", "ish", "ite", "al", "less"};
-	X               adjv = getxx();
+	X               adjv = getxx("-adjective");
 	int             i = 0;
 
-	adjv->type = "-adjective";
 	if (prob(0.2)) {
 		adjv->list.s[i++] = "not ";
 		adjv->list.s[i++] = "un";
@@ -955,11 +935,10 @@ adjective(void)
 X 
 adjph(E env)
 {
-	X               adjv = getxx();
+	X               adjv = getxx("adjph");
 	EE              nenv;
 	static EE       empty;
 	int             i = 0;
-	adjv->type = "adjph";
 	if (prob(0.25)) {
 		nenv = *env;
 		nenv.tense = 0;
@@ -997,8 +976,7 @@ static char    *preplist[] = {"across", "by", "in", "of",
 X 
 prep(void)
 {
-	X               pv = getxx();
-	pv->type = "-prep";
+	X               pv = getxx("-prep");
 	pv->list.s[0] = CHOOSE(preplist);
 	return pv;
 }
@@ -1006,12 +984,11 @@ prep(void)
 X 
 comp(E env)
 {
-	X               v = getxx();
+	X               v = getxx("comp");
 	EE              nenv;
 	static EE       empty;
 	int             i = 0;
 	nenv = empty;
-	v->type = "comp";
     if (/* DISABLES CODE */ (0) && prob(0.001))
 		v->list.x[i++] = adjective();
 	else if (prob(0.1))
@@ -1030,8 +1007,7 @@ comp(E env)
 X 
 advp(E env)
 {
-	X               v = getxx();
-	v->type = "advp";
+	X               v = getxx("advp");
 	v->list.x[0] = vprep();
 	v->list.x[1] = np(env);
 	return v;
@@ -1042,8 +1018,7 @@ static char    *vpreplist[] = {"to", "at", "by", "from", "with", "for"};
 X 
 vprep(void)
 {
-	X               v = getxx();
-	v->type = "-vprep";
+	X               v = getxx("-vprep");
 	v->list.s[0] = CHOOSE(vpreplist);
 	return v;
 }
@@ -1063,10 +1038,9 @@ getenvq(void)
 X 
 comma(E env)
 {
-	X               v = getxx();
+	X               v = getxx("-comma");
 	static EE       empty;
 
-	v->type = "-comma";
 	v->list.s[0] = ",";
 	*env = empty;
 	return v;
@@ -1078,9 +1052,7 @@ static char    *conjadvlist[] = {"we believe", "naturally", "therefore",
 X 
 conjadv(void)
 {
-	X               v = getxx();
-
-	v->type = "-conjadv";
+	X               v = getxx("-conjadv");
 	v->list.s[0] = CHOOSE(conjadvlist);
 	return v;
 }
@@ -1120,8 +1092,7 @@ X
 lconjadv(void)
 {
 
-	X               v = getxx();
-	v->type = "-lconjadv";
+	X               v = getxx("-lconjadv");
 	v->list.s[0] = CHOOSE(lconjlist);
 	return v;
 }
@@ -1136,8 +1107,7 @@ conjsub(void)
 		"whether or not",
 		"inasmuch as",
 	"as"};
-	X               v = getxx();
-	v->type = "-conjsub";
+	X               v = getxx("-conjsub");
 	v->list.s[0] = CHOOSE(conjsublist);
 	return v;
 }
@@ -1172,8 +1142,7 @@ static char    *lconjsublist[] = {"although", "even though",
 X 
 lconjsub(void)
 {
-	X               v = getxx();
-	v->type = "-lconjsub";
+	X               v = getxx("-lconjsub");
 	v->list.s[0] = CHOOSE(lconjsublist);
 	return v;
 }
@@ -1183,8 +1152,7 @@ static char    *conjlist[] = {"and", "but", "yet", "and", "and"};
 X 
 conjugate(void)
 {
-	X               v = getxx();
-	v->type = "-conj";
+	X               v = getxx("-conj");
 	v->list.s[0] = CHOOSE(conjlist);
 	return v;
 }
@@ -1216,8 +1184,7 @@ static char    *nomzlist[] = {"it is easy to see that",
 X 
 nomz(void)
 {
-	X               v = getxx();
-	v->type = "-nomz";
+	X               v = getxx("-nomz");
 	v->list.s[0] = CHOOSE(nomzlist);
 	return v;
 }
@@ -1225,7 +1192,7 @@ nomz(void)
 X
 equation(void)
 {
-	X		v = getxx();
+	X		v = getxx("-eqn");
 	static char eqnbuff[100], x;
 	static char *eqnelem[] = {"int", "sum", "prod", "union", "inter"};
 	static char *eqnfn[] = { "sin", "cos", "tan", "arc", "det",
@@ -1238,7 +1205,6 @@ equation(void)
 	static char *eqnrel[] = {"=", "<=", ">=", "==", "!=", "approx"};
 
 	x = 'a' + (R)%26;
-	v->type = "-eqn";
 	sprintf(eqnbuff,"$%s from %c=%d to %s %s ( %c ) d%c %s %s$",
 		CHOOSE(eqnelem), x, (R)&077, CHOOSE(eqnval), CHOOSE(eqnfn),
 		x, x, CHOOSE(eqnrel), CHOOSE(eqnval));
@@ -1249,10 +1215,9 @@ equation(void)
 X 
 turgid(E env)
 {
-	X               v = getxx();
+	X               v = getxx("turgid");
 	int             i = 0;
 
-	v->type = "turgid";
 	if (prob(T * 1.5)) {
 		v->list.x[i++] = lconjadv();
 		v->list.x[i++] = comma(env);
