@@ -12,11 +12,13 @@
 #define LAST(x) (x[strlen(x)-1])
 #define VOWEL(x) (x=='a'||x=='e'||x=='i'||x=='o'||x=='u')
 
-char            buff[1000];
-int             io;
-int             flag;
-int		eqn=0, tbl=0, pic=0;
-double          makeup = -1.;
+static char buff[1000];
+static int io;
+static int flag;
+static int eqn=0;
+static int tbl=0;
+static int pic=0;
+static double makeup = -1.;
 
 X 
 nomq(E env)
