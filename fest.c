@@ -11,23 +11,7 @@
 #define EQ(a,b) (strcmp(a,b)==0)
 #define LAST(x) (x[strlen(x)-1])
 #define VOWEL(x) (x=='a'||x=='e'||x=='i'||x=='o'||x=='u')
-#define N 8
-typedef struct xyz {
-	char           *type;
-	union {
-		struct xyz     *x[N];
-		char           *s[N];
-	}               list;
-}              *X, XX;
-typedef struct {
-	char           *number, *ending, *tense, *an, *unspec, *passive;
-}              *E, EE;
 
-X       getxx(), verbal(), comp(), advp(), adjph(), adverb(),
-	adjective(), prep(), vprep(), equation(), np(), aux(), vp(), art(),
-	modal(), perf(), prog(), nounal(), sent(), comma(), adjval();
-
-char           *tense(), *number(), *prefix(), *root();
 char            buff[1000];
 int             io;
 int             flag;
@@ -1394,7 +1378,7 @@ main(argc, argv)
 	int             i = 0, j = 0, k = 0;
 	int             lim = 0;
 	long            t = 0;
-	char            c, **str, *splitup();
+	char            c, **str;
 	int		junk, junk2;
 
 	for (i = 1, ++argv; i < argc; i++, argv++)
@@ -1566,6 +1550,7 @@ main(argc, argv)
 	exit(0);
 }
 
+void
 pr(tree)
 	X               tree;
 {
@@ -1588,6 +1573,7 @@ pr(tree)
 	return;
 }
 
+void
 out(s)
 	char           *s;
 {
@@ -1617,7 +1603,8 @@ out(s)
 	return;
 }
 
-caps()
+void
+caps(void)
 {
 	int             i;
 	for (i = 1; i < io; i++)
@@ -1625,7 +1612,8 @@ caps()
 			buff[i] += 'A' - 'a';
 }
 
-abo() {
+void
+abo(void) {
 	fprintf(stderr, "usage: festoon [-pet] [-sSEED] [SENTENCES] [%%-invented-nouns]\n");
 	exit(1);
 }
