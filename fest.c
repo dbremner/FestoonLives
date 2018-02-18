@@ -36,7 +36,7 @@ static inline bool is_vowel(char x)
 
 static char buff[1000];
 static int io;
-static int flag;
+static bool flag = false;
 static int eqn=0;
 static int tbl=0;
 static int pic=0;
@@ -1433,7 +1433,7 @@ main(int argc, char *argv[])
             while ((c = *++argv[0]))
 				switch (c) {
 				case 'z':
-					flag = 1;
+					flag = true;
 					continue;
 				case 'p':
 					pic = 1;
