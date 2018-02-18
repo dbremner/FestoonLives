@@ -1569,7 +1569,8 @@ char *
 splitup(char *strlab)
 {
 	static char label[64];
-	int j, c;
+    int j;
+    char c;
 
 	label[0]='"';
 	for (j=1; j<60 &&
