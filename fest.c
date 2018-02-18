@@ -11,6 +11,14 @@
 #define T 0.125
 #define CHOOSE(x) (x[(R)%(sizeof x / sizeof x[0])])
 
+static inline void set_number(E env, char *number)
+{
+    assert(env);
+    assert(number);
+    assert(env->number == NULL);
+    env->number = number;
+}
+
 static inline bool eq(const char *s, const char *t)
 {
     assert(s);
@@ -137,7 +145,7 @@ np(E env)
 		npv->list.x[0] = nomy();
 		npv->list.x[1] = sent(&nenv);
         if (env->number == NULL) {
-			env->number = "sing";
+			set_number(env, "sing");
         }
 		return npv;
 	}
@@ -176,7 +184,7 @@ passive(E env)
 		env->tense = env->ending = tense();
     }
     if (env->number == NULL) {
-		env->number = number();
+		set_number(env, number());
     }
     if (eq(env->ending, "modal")) {
 		v->list.s[0] = "be";
@@ -237,7 +245,7 @@ art(E env)
 	"a number of"};
 	X               artv = getxx("-art");
     if (env->number == NULL) {
-		env->number = number();
+		set_number(env, number());
     }
 	if (env->unspec == NULL && prob(0.33)) {
         if (is_singular(env)) {
@@ -296,7 +304,7 @@ perf(E env)
 		env->tense = env->ending = tense();
     }
     if (env->number == NULL) {
-		env->number = number();
+		set_number(env, number());
     }
 	if (eq(env->ending, "past")) {
 		perfv->list.s[0] = "had";
@@ -323,7 +331,7 @@ prog(E env)
 		env->tense = env->ending = tense();
     }
     if (env->number == NULL) {
-		env->number = number();
+		set_number(env, number());
     }
 	if (eq(env->ending, "pres")) {
         if (is_singular(env)) {
@@ -364,7 +372,7 @@ verb(E env)
 		env->tense = env->ending = tense();
     }
     if (env->number == NULL) {
-		env->number = number();
+		set_number(env, number());
     }
     if (/* DISABLES CODE */ (0) && prob(0.1) && eq(env->tense, env->ending)) {
 		if (is_singular(env)) {
@@ -709,7 +717,7 @@ noun(E env)
 	X               nounv = getxx("-noun");
 	int             i = 0;
     if (env->number == NULL) {
-		env->number = number();
+		set_number(env, number());
     }
 	if (prob(makeup)) {
 		if (prob(0.05)) {
