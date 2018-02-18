@@ -1,4 +1,5 @@
 /* %W%	 */
+#include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -8,9 +9,25 @@
 #define R rand()&32767
 #define T 0.125
 #define CHOOSE(x) (x[(R)%(sizeof x / sizeof x[0])])
-#define EQ(a,b) (strcmp(a,b)==0)
-#define LAST(x) (x[strlen(x)-1])
-#define VOWEL(x) (x=='a'||x=='e'||x=='i'||x=='o'||x=='u')
+
+static inline bool eq(const char *s, const char *t)
+{
+    const bool equal = strcmp(s, t) == 0;
+    return equal;
+}
+
+static inline char lastchar(const char *s)
+{
+    const size_t len = strlen(s);
+    const char value = s[len-1];
+    return value;
+}
+
+static inline bool is_vowel(char x)
+{
+    return (x=='a'||x=='e'||x=='i'||x=='o'||x=='u');
+}
+
 
 static char buff[1000];
 static int io;
@@ -24,13 +41,13 @@ X
 nomq(E env)
 {
 	X               v = getxx("-nomq");
-	if (EQ(env->number, "sing")) {
-		if (EQ(tense(), "past"))
+	if (eq(env->number, "sing")) {
+		if (eq(tense(), "past"))
 			v->list.s[0] = "there was";
 		else
 			v->list.s[0] = "there is";
 	} else {
-		if (EQ(tense(), "past"))
+		if (eq(tense(), "past"))
 			v->list.s[0] = "there were";
 		else
 			v->list.s[0] = "there are";
@@ -119,17 +136,17 @@ passive(E env)
 		env->tense = env->ending = tense();
 	if (env->number == 0)
 		env->number = number();
-	if (EQ(env->ending, "modal"))
+	if (eq(env->ending, "modal"))
 		v->list.s[0] = "be";
-	else if (EQ(env->ending, "-en"))
+	else if (eq(env->ending, "-en"))
 		v->list.s[0] = "been";
-	else if (EQ(env->ending, "-ing"))
+	else if (eq(env->ending, "-ing"))
 		v->list.s[0] = "being";
 	else {
-		if (EQ(env->tense, "past"))
-			v->list.s[0] = EQ(env->number, "sing") ? "was" : "were";
+		if (eq(env->tense, "past"))
+			v->list.s[0] = eq(env->number, "sing") ? "was" : "were";
 		else
-			v->list.s[0] = EQ(env->number, "sing") ? "is" : "are";
+			v->list.s[0] = eq(env->number, "sing") ? "is" : "are";
 	}
 	env->passive = env->ending = "pass";
 	return v;
@@ -171,21 +188,21 @@ art(E env)
 	if (env->number == 0)
 		env->number = number();
 	if (env->unspec == 0 && prob(0.33)) {
-		if (EQ(env->number, "sing"))
+		if (eq(env->number, "sing"))
 			artv->list.s[0] = CHOOSE(aspecsg);
 		else
 			artv->list.s[0] = CHOOSE(aspecpl);
-	} else if (prob(0.50) || env->an && EQ(env->number, "sing")) {
-		if (EQ(env->number, "sing"))
+	} else if (prob(0.50) || env->an && eq(env->number, "sing")) {
+		if (eq(env->number, "sing"))
 			artv->list.s[0] = env->an ? "a" : CHOOSE(aunssg);
 		else
 			artv->list.s[0] = CHOOSE(aunspl);
-		if (env->an && EQ(artv->list.s[0], "all"))
+		if (env->an && eq(artv->list.s[0], "all"))
 			artv->list.s[0] = "";
 	} else
 		artv->list.s[0] = "";
 	env->unspec = 0;
-	if (env->an && EQ(env->an, "an") && EQ(artv->list.s[0], "a"))
+	if (env->an && eq(env->an, "an") && eq(artv->list.s[0], "a"))
 		artv->list.s[0] = "an";
 	env->an = 0;
 	return artv;
@@ -199,7 +216,7 @@ modal(E env)
 	X               modalv = getxx("-modal");
 	if (env->tense == 0)
 		env->tense = env->ending = tense();
-	if (EQ(env->ending, "pres"))
+	if (eq(env->ending, "pres"))
 		modalv->list.s[0] = CHOOSE(pres);
 	else
 		modalv->list.s[0] = CHOOSE(past);
@@ -215,10 +232,10 @@ perf(E env)
 		env->tense = env->ending = tense();
 	if (env->number == 0)
 		env->number = number();
-	if (EQ(env->ending, "past")) {
+	if (eq(env->ending, "past")) {
 		perfv->list.s[0] = "had";
-	} else if (EQ(env->ending, "pres")) {
-		if (EQ(env->number, "sing"))
+	} else if (eq(env->ending, "pres")) {
+		if (eq(env->number, "sing"))
 			perfv->list.s[0] = "had";
 		else
 			perfv->list.s[0] = "have";
@@ -236,19 +253,19 @@ prog(E env)
 		env->tense = env->ending = tense();
 	if (env->number == 0)
 		env->number = number();
-	if (EQ(env->ending, "pres")) {
-		if (EQ(env->number, "sing"))
+	if (eq(env->ending, "pres")) {
+		if (eq(env->number, "sing"))
 			progv->list.s[0] = "is";
 		else
 			progv->list.s[0] = "are";
-	} else if (EQ(env->ending, "past")) {
-		if (EQ(env->number, "sing"))
+	} else if (eq(env->ending, "past")) {
+		if (eq(env->number, "sing"))
 			progv->list.s[0] = "was";
 		else
 			progv->list.s[0] = "were";
-	} else if (EQ(env->ending, "-en")) {
+	} else if (eq(env->ending, "-en")) {
 		progv->list.s[0] = "been";
-	} else if (EQ(env->ending, "modal")) {
+	} else if (eq(env->ending, "modal")) {
 		progv->list.s[0] = "be";
 	}
 	env->ending = "-ing";
@@ -270,14 +287,14 @@ verb(E env)
 		env->tense = env->ending = tense();
 	if (env->number == 0)
 		env->number = number();
-    if (/* DISABLES CODE */ (0) && prob(0.1) && EQ(env->tense, env->ending)) {
-		if (EQ(env->number, "sing")) {
-			if (EQ(env->tense, "pres"))
+    if (/* DISABLES CODE */ (0) && prob(0.1) && eq(env->tense, env->ending)) {
+		if (eq(env->number, "sing")) {
+			if (eq(env->tense, "pres"))
 				verbv->list.s[0] = "is";
 			else
 				verbv->list.s[0] = "was";
 		} else {
-			if (EQ(env->tense, "pres"))
+			if (eq(env->tense, "pres"))
 				verbv->list.s[0] = "are";
 			else
 				verbv->list.s[0] = "were";
@@ -285,17 +302,17 @@ verb(E env)
 	} else {
 		verbv->list.s[0] = prefix();
 		verbv->list.s[1] = root();
-		if (EQ(env->ending, "pres") && EQ(env->number, "sing"))
+		if (eq(env->ending, "pres") && eq(env->number, "sing"))
 			i = 1;
-		else if (EQ(env->ending, "pres") || EQ(env->ending, "modal"))
+		else if (eq(env->ending, "pres") || eq(env->ending, "modal"))
 			i = 0;
-		else if (EQ(env->ending, "past"))
+		else if (eq(env->ending, "past"))
 			i = 2;
-		else if (EQ(env->ending, "-en"))
+		else if (eq(env->ending, "-en"))
 			i = 3;
-		else if (EQ(env->ending, "-ing"))
+		else if (eq(env->ending, "-ing"))
 			i = 4;
-		else if (EQ(env->ending, "pass"))
+		else if (eq(env->ending, "pass"))
 			i = 5;
 		else
 			i = 0;
@@ -613,10 +630,10 @@ noun(E env)
 		nounv->list.s[i++] = root();
 		nounv->list.s[i++] = CHOOSE(suff);
 	}
-	if (EQ(env->number, "plural")) {
-		if (LAST(nounv->list.s[i - 1]) == 's')
+	if (eq(env->number, "plural")) {
+		if (lastchar(nounv->list.s[i - 1]) == 's')
 			nounv->list.s[i] = "es";
-		else if (LAST(nounv->list.s[i - 1]) == 'y')
+		else if (lastchar(nounv->list.s[i - 1]) == 'y')
 			nounv->list.s[i] = "ies";
 		else
 			nounv->list.s[i] = "s";
@@ -642,7 +659,7 @@ nounal(E env)
 	for (i = 0; p->list.s[i]; i++) {
 		if (p->list.s[i][0] == 0)
 			continue;
-		if (VOWEL(p->list.s[i][0])) {
+		if (is_vowel(p->list.s[i][0])) {
 			env->an = "an";
 		}
 		break;
