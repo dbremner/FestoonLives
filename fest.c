@@ -1616,6 +1616,8 @@ void
 pr(X tree)
 {
     assert(tree);
+    assert(io >= 0);
+    assert(io < sizeof(buff));
 	if (flag ) {
 		out("<");
 		out(tree->type);
@@ -1638,6 +1640,8 @@ void
 out(char *s)
 {
     assert(s);
+    assert(io >= 0);
+    assert(io < sizeof(buff));
     if (io == 0 && *s == ' ') {
         return;
     }
@@ -1669,6 +1673,8 @@ out(char *s)
 void
 caps(int iolen)
 {
+    assert(iolen >= 0);
+    assert(iolen < sizeof(buff));
     for (int i = 1; i < iolen; i++) {
         if (buff[i - 1] == ' ' && buff[i] <= 'z' && buff[i] >= 'a') {
             buff[i] += 'A' - 'a';
