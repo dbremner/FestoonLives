@@ -1698,7 +1698,7 @@ splitup(char *strlab)
 
 	label[0]='"';
 	for (j=1; j<60 &&
-		(c = *strlab++) != '\0'; j++)
+         (c = *strlab++) != '\0'; j++) {
 		if (c == ' ') {
 			label[j++]='"';
 			label[j++]=' ';
@@ -1707,6 +1707,7 @@ splitup(char *strlab)
         else {
 			label[j] = c;
         }
+    }
 	label[j++] = '"'; label[j] = '\0';
 	return(label);
 }
