@@ -1351,8 +1351,10 @@ main(int argc, char *argv[])
 				}
 		else if (lim == 0)
 			lim = atoi(argv[0]);
-		else
-			makeup = 1.0 - (float) atoi(argv[0]) / 100.0;
+        else {
+            const int value = atoi(argv[0]);
+			makeup = 1.0 - (float)value / 100.0;
+        }
 	if (t == 0)
 		time(&t);
 	if (makeup < 0. || makeup > 1.0)
