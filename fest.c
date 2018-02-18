@@ -1465,7 +1465,8 @@ main(int argc, char *argv[])
     if (lim <= 0) {
 		lim = 25;
     }
-	srand((int) t);
+	//srand((int) t);
+    srand(65521); //TODO remove this
 
 	printf(".TL\n");
 	env = getenvq();
