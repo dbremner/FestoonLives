@@ -1,5 +1,9 @@
 /* %W%	 */
 #include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <time.h>
+
 #define R rand()&32767
 #define T 0.125
 #define CHOOSE(x) (x[(R)%(sizeof x / sizeof x[0])])
