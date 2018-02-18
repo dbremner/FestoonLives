@@ -758,8 +758,10 @@ getxx(void)
 	static XX       empty;
 
 	rv = (X) malloc(sizeof *rv);
-	if (rv == 0)
-		fprintf(stderr, "festoon: outa space\n"), exit(1);
+    if (rv == 0) {
+        fprintf(stderr, "festoon: outa space\n");
+        exit(1);
+    }
 	*rv = empty;
 	return rv;
 }
@@ -1055,8 +1057,10 @@ getenvq(void)
 	static EE       empty;
 	E               v;
 	v = (E) malloc(sizeof *v);
-	if (v == 0)
-		printf("outa room\n"), exit(1);
+    if (v == 0) {
+        printf("outa room\n");
+        exit(1);
+    }
 	*v = empty;
 	return v;
 }
@@ -1500,16 +1504,20 @@ main(int argc, char *argv[])
 			}
 			else printf("%s.\n", buff);	/* normal flush */
 		}
-		if (++j > 2 && prob(0.4))
-			printf(".P\n"), j = 0;
+        if (++j > 2 && prob(0.4)) {
+            printf(".P\n");
+            j = 0;
+        }
 		free(env);
 	}
 	printf(".SG\n");
 	printf(".NS 0\n");
 	for (j = 0; j == 0;) {
 		for (i = 0; i < sizeof ccto / sizeof *ccto; i++) {
-			if (prob(.10))
-				j = 1, printf("%s\n", ccto[i]);
+            if (prob(.10)) {
+                j = 1;
+                printf("%s\n", ccto[i]);
+            }
 		}
 	}
 	printf(".NE\n");
