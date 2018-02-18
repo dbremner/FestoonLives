@@ -25,6 +25,7 @@
 /* Begin PBXFileReference section */
 		36AB741B20391CFC008583C3 /* Festoon */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = Festoon; sourceTree = BUILT_PRODUCTS_DIR; };
 		36AB742520391D27008583C3 /* fest.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = fest.c; path = ../../fest.c; sourceTree = "<group>"; };
+		36AB742720391E92008583C3 /* fest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = fest.h; path = ../../fest.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -57,6 +58,7 @@
 		36AB741D20391CFC008583C3 /* Festoon */ = {
 			isa = PBXGroup;
 			children = (
+				36AB742720391E92008583C3 /* fest.h */,
 				36AB742520391D27008583C3 /* fest.c */,
 			);
 			path = Festoon;
