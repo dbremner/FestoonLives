@@ -22,8 +22,8 @@ static inline bool eq(const char *s, const char *t)
 static inline char lastchar(const char *s)
 {
     assert(s);
-    assert(strlen(s) > 0);
     const size_t len = strlen(s);
+    assert(len > 0);
     const char value = s[len-1];
     return value;
 }
