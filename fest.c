@@ -103,7 +103,7 @@ np(E env)
 		nenv = empty;
 		npv->list.x[0] = nomy();
 		npv->list.x[1] = sent(&nenv);
-		if (env->number == 0)
+		if (env->number == NULL)
 			env->number = "sing";
 		return npv;
 	}
@@ -117,7 +117,7 @@ aux(E env)
 {
 	X               auxv = getxx("aux");
 	int             i = 0;
-	if (env->tense == 0)
+	if (env->tense == NULL)
 		env->tense = env->ending = tense();
 	if (prob(0.25))
 		auxv->list.x[i++] = modal(env);
@@ -132,9 +132,9 @@ X
 passive(E env)
 {
 	X               v = getxx("-passive");
-	if (env->tense == 0)
+	if (env->tense == NULL)
 		env->tense = env->ending = tense();
-	if (env->number == 0)
+	if (env->number == NULL)
 		env->number = number();
 	if (eq(env->ending, "modal"))
 		v->list.s[0] = "be";
@@ -185,9 +185,9 @@ art(E env)
 		"an undue number of",
 	"a number of"};
 	X               artv = getxx("-art");
-	if (env->number == 0)
+	if (env->number == NULL)
 		env->number = number();
-	if (env->unspec == 0 && prob(0.33)) {
+	if (env->unspec == NULL && prob(0.33)) {
 		if (eq(env->number, "sing"))
 			artv->list.s[0] = CHOOSE(aspecsg);
 		else
@@ -201,10 +201,10 @@ art(E env)
 			artv->list.s[0] = "";
 	} else
 		artv->list.s[0] = "";
-	env->unspec = 0;
+	env->unspec = NULL;
 	if (env->an && eq(env->an, "an") && eq(artv->list.s[0], "a"))
 		artv->list.s[0] = "an";
-	env->an = 0;
+	env->an = NULL;
 	return artv;
 }
 
@@ -214,7 +214,7 @@ modal(E env)
 	static char    *pres[] = {"can", "may", "must", "shall", "will"};
 	static char    *past[] = {"could", "might", "should", "would"};
 	X               modalv = getxx("-modal");
-	if (env->tense == 0)
+	if (env->tense == NULL)
 		env->tense = env->ending = tense();
 	if (eq(env->ending, "pres"))
 		modalv->list.s[0] = CHOOSE(pres);
@@ -228,9 +228,9 @@ X
 perf(E env)
 {
 	X               perfv = getxx("-perf");
-	if (env->tense == 0)
+	if (env->tense == NULL)
 		env->tense = env->ending = tense();
-	if (env->number == 0)
+	if (env->number == NULL)
 		env->number = number();
 	if (eq(env->ending, "past")) {
 		perfv->list.s[0] = "had";
@@ -249,9 +249,9 @@ X
 prog(E env)
 {
 	X               progv = getxx("-prog");
-	if (env->tense == 0)
+	if (env->tense == NULL)
 		env->tense = env->ending = tense();
-	if (env->number == 0)
+	if (env->number == NULL)
 		env->number = number();
 	if (eq(env->ending, "pres")) {
 		if (eq(env->number, "sing"))
@@ -283,9 +283,9 @@ verb(E env)
 	{"ize", "izes", "ized", "ized", "izing", "ized"}};
 	X               verbv = getxx("-verb");
 	int             i;
-	if (env->tense == 0)
+	if (env->tense == NULL)
 		env->tense = env->ending = tense();
-	if (env->number == 0)
+	if (env->number == NULL)
 		env->number = number();
     if (/* DISABLES CODE */ (0) && prob(0.1) && eq(env->tense, env->ending)) {
 		if (eq(env->number, "sing")) {
@@ -318,7 +318,7 @@ verb(E env)
 			i = 0;
 		verbv->list.s[2] = ends[R % (sizeof ends / sizeof *ends)][i];
 	}
-	env->ending = 0;
+	env->ending = NULL;
 	return verbv;
 }
 
@@ -617,7 +617,7 @@ noun(E env)
 		"kin", "cule", "icle", "y", "ability", "iosos"};
 	X               nounv = getxx("-noun");
 	int             i = 0;
-	if (env->number == 0)
+	if (env->number == NULL)
 		env->number = number();
 	if (prob(makeup)) {
 		if (prob(0.05)) {
@@ -958,7 +958,7 @@ adjph(E env)
 	int             i = 0;
 	if (prob(0.25)) {
 		nenv = *env;
-		nenv.tense = 0;
+		nenv.tense = NULL;
 		adjv->list.x[i++] = rel();
 		adjv->list.x[i++] = aux(&nenv);
 		adjv->list.x[i++] = vp(&nenv);
@@ -1014,7 +1014,7 @@ comp(E env)
 		if (env->passive)
 			v->list.x[i++] = passprep();
 		v->list.x[i++] = np(&nenv);
-		env->passive = 0;
+		env->passive = NULL;
 	}
     if (/* DISABLES CODE */ (0) && prob(0.05))
 		v->list.x[i++] = adverb();
@@ -1044,7 +1044,7 @@ E
 getenvq(void)
 {
 	E v = (E) calloc(sizeof *v, 1);
-    if (v == 0) {
+    if (v == NULL) {
         printf("outa room\n");
         exit(1);
     }
