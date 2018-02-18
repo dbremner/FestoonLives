@@ -1304,7 +1304,8 @@ X
 equation(void)
 {
 	X		v = getxx("-eqn");
-	static char eqnbuff[100], x;
+    static char eqnbuff[100];
+    char x;
 	static char *eqnelem[] = {"int", "sum", "prod", "union", "inter"};
 	static char *eqnfn[] = { "sin", "cos", "tan", "arc", "det",
 		"log", "exp", "f", "g", "sinh", "O", "J sub 0", "J sub 1",
@@ -1418,11 +1419,15 @@ main(int argc, char *argv[])
 	"left", "up left", "left", "down", "down right", NULL};
 	E               env;
 	X               tree;
-	int             i = 0, j = 0, k = 0;
+    int             i = 0;
+    int             j = 0;
+    int             k = 0;
 	int             lim = 0;
 	long            t = 0;
-	char            c, **str;
-	int		junk, junk2;
+    char            c;
+    char            **str;
+    int             junk;
+    int             junk2;
 
 	for (i = 1, ++argv; i < argc; i++, argv++)
 		if (*argv[0] == '-')	/* -pet -snnn */
