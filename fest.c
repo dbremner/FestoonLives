@@ -110,10 +110,9 @@ np(E env)
 {
     assert(env);
 	X               npv = getxx("np");
-	EE              nenv;
-	static EE       empty;
-	if (prob(0.025)) {
-		nenv = empty;
+    static EE       empty;
+    if (prob(0.025)) {
+        EE nenv = empty;
 		npv->list.x[0] = nomy();
 		npv->list.x[1] = sent(&nenv);
         if (env->number == NULL) {
