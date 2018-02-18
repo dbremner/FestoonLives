@@ -1,4 +1,5 @@
 /* %W%	 */
+#include <assert.h>
 #include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -12,12 +13,16 @@
 
 static inline bool eq(const char *s, const char *t)
 {
+    assert(s);
+    assert(t);
     const bool equal = strcmp(s, t) == 0;
     return equal;
 }
 
 static inline char lastchar(const char *s)
 {
+    assert(s);
+    assert(strlen(s) > 0);
     const size_t len = strlen(s);
     const char value = s[len-1];
     return value;
@@ -40,6 +45,7 @@ static double makeup = -1.;
 X 
 nomq(E env)
 {
+    assert(env);
 	X               v = getxx("-nomq");
 	if (eq(env->number, "sing")) {
 		if (eq(tense(), "past"))
@@ -69,6 +75,7 @@ rel(void)
 X 
 sent(E env)
 {
+    assert(env);
 	X               sentv = getxx("sent");
 	if (prob(0.09)) {
 		env->unspec = "";
@@ -96,6 +103,7 @@ nomy(void)
 X 
 np(E env)
 {
+    assert(env);
 	X               npv = getxx("np");
 	EE              nenv;
 	static EE       empty;
@@ -115,6 +123,7 @@ np(E env)
 X 
 aux(E env)
 {
+    assert(env);
 	X               auxv = getxx("aux");
 	int             i = 0;
 	if (env->tense == NULL)
@@ -131,6 +140,7 @@ aux(E env)
 X 
 passive(E env)
 {
+    assert(env);
 	X               v = getxx("-passive");
 	if (env->tense == NULL)
 		env->tense = env->ending = tense();
@@ -163,6 +173,7 @@ passprep(void)
 X 
 vp(E env)
 {
+    assert(env);
 	X               vpv = getxx("vp");
 	int             i = 0;
 	if (prob(0.5))
@@ -177,6 +188,7 @@ vp(E env)
 X 
 art(E env)
 {
+    assert(env);
 	static char    *aspecsg[] = {"the", "the", "the", "the", "the", "this", "this", "that"};
 	static char    *aspecpl[] = {"the", "the", "the", "the", "the", "these", "those"};
 	static char    *aunssg[] = {"a", "a", "a", "a", "a", "a", "a", "much", "each", "any"};
@@ -211,6 +223,7 @@ art(E env)
 X 
 modal(E env)
 {
+    assert(env);
 	static char    *pres[] = {"can", "may", "must", "shall", "will"};
 	static char    *past[] = {"could", "might", "should", "would"};
 	X               modalv = getxx("-modal");
@@ -227,6 +240,7 @@ modal(E env)
 X 
 perf(E env)
 {
+    assert(env);
 	X               perfv = getxx("-perf");
 	if (env->tense == NULL)
 		env->tense = env->ending = tense();
@@ -248,6 +262,7 @@ perf(E env)
 X 
 prog(E env)
 {
+    assert(env);
 	X               progv = getxx("-prog");
 	if (env->tense == NULL)
 		env->tense = env->ending = tense();
@@ -275,6 +290,7 @@ prog(E env)
 X 
 verb(E env)
 {
+    assert(env);
 	/* they pres, he pres, they past, they perf, they prog, they pass */
 	static char    *ends[][6] = {{"ate", "ates", "ated", "ated", "ating", "ated"},
 	{"en", "ens", "ened", "ened", "ening", "ened"},
@@ -606,6 +622,7 @@ static char    *adjlist[] = {"concrete", "abstract", "procedural",
 X 
 noun(E env)
 {
+    assert(env);
 	static char    *suff[] = {"ion", "sion", "tion", "age",
 		"ness", "ment", "ure",
 		"ity", "iety", "ty", "ence", "ency", "ance",
@@ -644,6 +661,7 @@ noun(E env)
 X 
 nounal(E env)
 {
+    assert(env);
 	X               nounalv = getxx("nounal");
 	int             i = 0;
 	X               p;
@@ -754,6 +772,8 @@ number(void)
 X
 getxx(char *type)
 {
+    assert(type);
+    assert(strlen(type) > 0);
     X rv = (X) calloc(sizeof *rv, 1);
     if (rv == 0) {
         fprintf(stderr, "festoon: outa space\n");
@@ -766,6 +786,7 @@ getxx(char *type)
 X 
 verbal(E env)
 {
+    assert(env);
 	X               verbalv = getxx("verbal");
 	int             i = 0;
 	if (prob(0.25))
@@ -952,6 +973,7 @@ adjective(void)
 X 
 adjph(E env)
 {
+    assert(env);
 	X               adjv = getxx("adjph");
 	EE              nenv;
 	static EE       empty;
@@ -1001,6 +1023,7 @@ prep(void)
 X 
 comp(E env)
 {
+    assert(env);
 	X               v = getxx("comp");
 	EE              nenv;
 	static EE       empty;
@@ -1024,6 +1047,7 @@ comp(E env)
 X 
 advp(E env)
 {
+    assert(env);
 	X               v = getxx("advp");
 	v->list.x[0] = vprep();
 	v->list.x[1] = np(env);
@@ -1054,6 +1078,7 @@ getenvq(void)
 X 
 comma(E env)
 {
+    assert(env);
 	X               v = getxx("-comma");
 	static EE       empty;
 
@@ -1231,6 +1256,7 @@ equation(void)
 X 
 turgid(E env)
 {
+    assert(env);
 	X               v = getxx("turgid");
 	int             i = 0;
 
@@ -1505,6 +1531,7 @@ main(int argc, char *argv[])
 void
 pr(X tree)
 {
+    assert(tree);
 	if (flag ) {
 		out("<");
 		out(tree->type);
@@ -1526,6 +1553,7 @@ pr(X tree)
 void
 out(char *s)
 {
+    assert(s);
 	if (io == 0 && *s == ' ')
 		return;
 	if (io == 0) {
@@ -1570,6 +1598,7 @@ abo(void) {
 char *
 splitup(char *strlab)
 {
+    assert(strlab);
 	static char label[64];
     int j;
     char c;
