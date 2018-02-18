@@ -1393,7 +1393,7 @@ main(int argc, char *argv[])
 	buff[io] = 0;
 	caps();
 	printf("%s\n", buff);
-	printf(".AU \"C. C. Festoon\" CCF Headquarters %d\n", t);
+    printf(".AU \"C. C. Festoon\" CCF Headquarters %ld\n", t);
 	if (eqn)
 		printf(".EQ\ndelim $$\n.EN\n");
 	printf(".AS\n");
@@ -1458,7 +1458,7 @@ main(int argc, char *argv[])
 			printf("Action Plan %d\n=\n", i);
 			printf("Item\tWho\tAction\n");
 			for (junk = 1; junk < (i&17)+4; junk++) {
-				printf("_\n%d\t", t/i+junk);
+                printf("_\n%ld\t", t/i+junk);
 				printf("%s\tT{\n", CHOOSE(ccto));
 				free(env);
 				env = getenvq();
