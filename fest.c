@@ -1353,7 +1353,7 @@ main(int argc, char *argv[])
 			lim = atoi(argv[0]);
         else {
             const int value = atoi(argv[0]);
-			makeup = 1.0 - (float)value / 100.0;
+			makeup = 1.0 - (double)value / 100.0;
         }
 	if (t == 0)
 		time(&t);
