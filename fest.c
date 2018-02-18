@@ -755,14 +755,11 @@ X
 getxx(void)
 {
 	X               rv;
-	static XX       empty;
-
-	rv = (X) malloc(sizeof *rv);
+	rv = (X) calloc(sizeof *rv, 1);
     if (rv == 0) {
         fprintf(stderr, "festoon: outa space\n");
         exit(1);
     }
-	*rv = empty;
 	return rv;
 }
 
@@ -1054,14 +1051,12 @@ vprep(void)
 E 
 getenvq(void)
 {
-	static EE       empty;
 	E               v;
-	v = (E) malloc(sizeof *v);
+	v = (E) calloc(sizeof *v, 1);
     if (v == 0) {
         printf("outa room\n");
         exit(1);
     }
-	*v = empty;
 	return v;
 }
 
