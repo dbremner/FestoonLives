@@ -48,19 +48,24 @@ nomq(E env)
     assert(env);
 	X               v = getxx("-nomq");
 	if (eq(env->number, "sing")) {
-		if (eq(tense(), "past"))
+        if (eq(tense(), "past")) {
 			v->list.s[0] = "there was";
-		else
+        }
+        else {
 			v->list.s[0] = "there is";
+        }
 	} else {
-		if (eq(tense(), "past"))
+        if (eq(tense(), "past")) {
 			v->list.s[0] = "there were";
-		else
+        }
+        else {
 			v->list.s[0] = "there are";
+        }
 	}
-	if (prob(0.2))
+    if (prob(0.2)) {
 		v->list.s[1] = " not";
-	return v;
+    }
+    return v;
 }
 
 X 
@@ -111,8 +116,9 @@ np(E env)
 		nenv = empty;
 		npv->list.x[0] = nomy();
 		npv->list.x[1] = sent(&nenv);
-		if (env->number == NULL)
+        if (env->number == NULL) {
 			env->number = "sing";
+        }
 		return npv;
 	}
 	npv->list.x[1] = nounal(env);
@@ -126,15 +132,19 @@ aux(E env)
     assert(env);
 	X               auxv = getxx("aux");
 	int             i = 0;
-	if (env->tense == NULL)
+    if (env->tense == NULL) {
 		env->tense = env->ending = tense();
-	if (prob(0.25))
+    }
+    if (prob(0.25)) {
 		auxv->list.x[i++] = modal(env);
-	if (prob(0.25))
+    }
+    if (prob(0.25)) {
 		auxv->list.x[i++] = perf(env);
-	if (prob(0.25))
+    }
+    if (prob(0.25)) {
 		auxv->list.x[i++] = prog(env);
-	return auxv;
+    }
+    return auxv;
 }
 
 X 
@@ -142,21 +152,28 @@ passive(E env)
 {
     assert(env);
 	X               v = getxx("-passive");
-	if (env->tense == NULL)
+    if (env->tense == NULL) {
 		env->tense = env->ending = tense();
-	if (env->number == NULL)
+    }
+    if (env->number == NULL) {
 		env->number = number();
-	if (eq(env->ending, "modal"))
+    }
+    if (eq(env->ending, "modal")) {
 		v->list.s[0] = "be";
-	else if (eq(env->ending, "-en"))
+    }
+    else if (eq(env->ending, "-en")) {
 		v->list.s[0] = "been";
-	else if (eq(env->ending, "-ing"))
+    }
+    else if (eq(env->ending, "-ing")) {
 		v->list.s[0] = "being";
+    }
 	else {
-		if (eq(env->tense, "past"))
+        if (eq(env->tense, "past")) {
 			v->list.s[0] = eq(env->number, "sing") ? "was" : "were";
-		else
+        }
+        else {
 			v->list.s[0] = eq(env->number, "sing") ? "is" : "are";
+        }
 	}
 	env->passive = env->ending = "pass";
 	return v;
@@ -176,12 +193,14 @@ vp(E env)
     assert(env);
 	X               vpv = getxx("vp");
 	int             i = 0;
-	if (prob(0.5))
+    if (prob(0.5)) {
 		vpv->list.x[i++] = passive(env);
+    }
 	vpv->list.x[i++] = verbal(env);
 	vpv->list.x[i++] = comp(env);
-	if (prob(0.10))
+    if (prob(0.10)) {
 		vpv->list.x[i++] = advp(env);
+    }
 	return vpv;
 }
 
@@ -197,25 +216,33 @@ art(E env)
 		"an undue number of",
 	"a number of"};
 	X               artv = getxx("-art");
-	if (env->number == NULL)
+    if (env->number == NULL) {
 		env->number = number();
+    }
 	if (env->unspec == NULL && prob(0.33)) {
-		if (eq(env->number, "sing"))
+        if (eq(env->number, "sing")) {
 			artv->list.s[0] = CHOOSE(aspecsg);
-		else
+        }
+        else {
 			artv->list.s[0] = CHOOSE(aspecpl);
+        }
 	} else if (prob(0.50) || env->an && eq(env->number, "sing")) {
-		if (eq(env->number, "sing"))
+        if (eq(env->number, "sing")) {
 			artv->list.s[0] = env->an ? "a" : CHOOSE(aunssg);
-		else
+        }
+        else {
 			artv->list.s[0] = CHOOSE(aunspl);
-		if (env->an && eq(artv->list.s[0], "all"))
+        }
+        if (env->an && eq(artv->list.s[0], "all")) {
 			artv->list.s[0] = "";
-	} else
+        }
+    } else {
 		artv->list.s[0] = "";
+    }
 	env->unspec = NULL;
-	if (env->an && eq(env->an, "an") && eq(artv->list.s[0], "a"))
+    if (env->an && eq(env->an, "an") && eq(artv->list.s[0], "a")) {
 		artv->list.s[0] = "an";
+    }
 	env->an = NULL;
 	return artv;
 }
@@ -227,12 +254,15 @@ modal(E env)
 	static char    *pres[] = {"can", "may", "must", "shall", "will"};
 	static char    *past[] = {"could", "might", "should", "would"};
 	X               modalv = getxx("-modal");
-	if (env->tense == NULL)
+    if (env->tense == NULL) {
 		env->tense = env->ending = tense();
-	if (eq(env->ending, "pres"))
+    }
+    if (eq(env->ending, "pres")) {
 		modalv->list.s[0] = CHOOSE(pres);
-	else
+    }
+    else {
 		modalv->list.s[0] = CHOOSE(past);
+    }
 	env->ending = "modal";
 	return modalv;
 }
@@ -242,19 +272,24 @@ perf(E env)
 {
     assert(env);
 	X               perfv = getxx("-perf");
-	if (env->tense == NULL)
+    if (env->tense == NULL) {
 		env->tense = env->ending = tense();
-	if (env->number == NULL)
+    }
+    if (env->number == NULL) {
 		env->number = number();
+    }
 	if (eq(env->ending, "past")) {
 		perfv->list.s[0] = "had";
 	} else if (eq(env->ending, "pres")) {
-		if (eq(env->number, "sing"))
+        if (eq(env->number, "sing")) {
 			perfv->list.s[0] = "had";
-		else
+        }
+        else {
 			perfv->list.s[0] = "have";
-	} else
+        }
+    } else {
 		perfv->list.s[0] = "have";
+    }
 	env->ending = "-en";
 	return perfv;
 }
@@ -264,20 +299,26 @@ prog(E env)
 {
     assert(env);
 	X               progv = getxx("-prog");
-	if (env->tense == NULL)
+    if (env->tense == NULL) {
 		env->tense = env->ending = tense();
-	if (env->number == NULL)
+    }
+    if (env->number == NULL) {
 		env->number = number();
+    }
 	if (eq(env->ending, "pres")) {
-		if (eq(env->number, "sing"))
+        if (eq(env->number, "sing")) {
 			progv->list.s[0] = "is";
-		else
+        }
+        else {
 			progv->list.s[0] = "are";
+        }
 	} else if (eq(env->ending, "past")) {
-		if (eq(env->number, "sing"))
+        if (eq(env->number, "sing")) {
 			progv->list.s[0] = "was";
-		else
+        }
+        else {
 			progv->list.s[0] = "were";
+        }
 	} else if (eq(env->ending, "-en")) {
 		progv->list.s[0] = "been";
 	} else if (eq(env->ending, "modal")) {
@@ -299,39 +340,52 @@ verb(E env)
 	{"ize", "izes", "ized", "ized", "izing", "ized"}};
 	X               verbv = getxx("-verb");
 	int             i;
-	if (env->tense == NULL)
+    if (env->tense == NULL) {
 		env->tense = env->ending = tense();
-	if (env->number == NULL)
+    }
+    if (env->number == NULL) {
 		env->number = number();
+    }
     if (/* DISABLES CODE */ (0) && prob(0.1) && eq(env->tense, env->ending)) {
 		if (eq(env->number, "sing")) {
-			if (eq(env->tense, "pres"))
+            if (eq(env->tense, "pres")) {
 				verbv->list.s[0] = "is";
-			else
+            }
+            else {
 				verbv->list.s[0] = "was";
+            }
 		} else {
-			if (eq(env->tense, "pres"))
+            if (eq(env->tense, "pres")) {
 				verbv->list.s[0] = "are";
-			else
+            }
+            else {
 				verbv->list.s[0] = "were";
+            }
 		}
 	} else {
 		verbv->list.s[0] = prefix();
 		verbv->list.s[1] = root();
-		if (eq(env->ending, "pres") && eq(env->number, "sing"))
+        if (eq(env->ending, "pres") && eq(env->number, "sing")) {
 			i = 1;
-		else if (eq(env->ending, "pres") || eq(env->ending, "modal"))
+        }
+        else if (eq(env->ending, "pres") || eq(env->ending, "modal")) {
 			i = 0;
-		else if (eq(env->ending, "past"))
+        }
+        else if (eq(env->ending, "past")) {
 			i = 2;
-		else if (eq(env->ending, "-en"))
+        }
+        else if (eq(env->ending, "-en")) {
 			i = 3;
-		else if (eq(env->ending, "-ing"))
+        }
+        else if (eq(env->ending, "-ing")) {
 			i = 4;
-		else if (eq(env->ending, "pass"))
+        }
+        else if (eq(env->ending, "pass")) {
 			i = 5;
-		else
+        }
+        else {
 			i = 0;
+        }
 		verbv->list.s[2] = ends[R % (sizeof ends / sizeof *ends)][i];
 	}
 	env->ending = NULL;
@@ -634,26 +688,31 @@ noun(E env)
 		"kin", "cule", "icle", "y", "ability", "iosos"};
 	X               nounv = getxx("-noun");
 	int             i = 0;
-	if (env->number == NULL)
+    if (env->number == NULL) {
 		env->number = number();
+    }
 	if (prob(makeup)) {
 		if (prob(0.05)) {
 			nounv->list.s[i++] = CHOOSE(adjlist);
 			nounv->list.s[i++] = "ness";
-		} else
+        } else {
 			nounv->list.s[i++] = CHOOSE(nounlist);
+        }
 	} else {
 		nounv->list.s[i++] = prefix();
 		nounv->list.s[i++] = root();
 		nounv->list.s[i++] = CHOOSE(suff);
 	}
 	if (eq(env->number, "plural")) {
-		if (lastchar(nounv->list.s[i - 1]) == 's')
+        if (lastchar(nounv->list.s[i - 1]) == 's') {
 			nounv->list.s[i] = "es";
-		else if (lastchar(nounv->list.s[i - 1]) == 'y')
+        }
+        else if (lastchar(nounv->list.s[i - 1]) == 'y') {
 			nounv->list.s[i] = "ies";
-		else
+        }
+        else {
 			nounv->list.s[i] = "s";
+        }
 	}
 	return nounv;
 }
@@ -673,10 +732,13 @@ nounal(E env)
 		nounalv->list.x[i++] = adjph(env);
 	}
 	env->an = "a";
-	for (p = nounalv; p->type[0] != '-'; p = p->list.x[0]);
+    for (p = nounalv; p->type[0] != '-'; p = p->list.x[0]) {
+        ;
+    }
 	for (i = 0; p->list.s[i]; i++) {
-		if (p->list.s[i][0] == 0)
+        if (p->list.s[i][0] == 0) {
 			continue;
+        }
 		if (is_vowel(p->list.s[i][0])) {
 			env->an = "an";
 		}
@@ -718,8 +780,9 @@ prefix(void)
 		"hexa", "sex", "dis", "deca", "deka", "deci", "kilo", "mill", "milli",
 		"tri", "per", "dia", "ad", "com", "di", "amphi", "bi", "bin", "bis",
 	"sub", "hypo", "epi", "eu", "holo"};
-	if (prob(0.65))
+    if (prob(0.65)) {
 		return "";
+    }
 	return CHOOSE(pref);
 }
 
@@ -789,8 +852,9 @@ verbal(E env)
     assert(env);
 	X               verbalv = getxx("verbal");
 	int             i = 0;
-	if (prob(0.25))
+    if (prob(0.25)) {
 		verbalv->list.x[i++] = adverb();
+    }
 	verbalv->list.x[i++] = verb(env);
 	return verbalv;
 }
@@ -934,10 +998,12 @@ adverb(void)
 		adverbv->list.s[i++] = prob(.5) ? "simply" : "easily";
 		return adverbv;
 	}
-	if (prob(0.4))
+    if (prob(0.4)) {
 		adverbv->list.s[i++] = CHOOSE(wordy);
-	if (prob(makeup))
+    }
+    if (prob(makeup)) {
 		adverbv->list.s[i++] = CHOOSE(advlist);
+    }
 	else {
 		adverbv->list.s[i++] = prefix();
 		adverbv->list.s[i++] = root();
@@ -1029,18 +1095,22 @@ comp(E env)
 	static EE       empty;
 	int             i = 0;
 	nenv = empty;
-    if (/* DISABLES CODE */ (0) && prob(0.001))
+    if (/* DISABLES CODE */ (0) && prob(0.001)) {
 		v->list.x[i++] = adjective();
-	else if (prob(0.1))
+    }
+    else if (prob(0.1)) {
 		v->list.x[i++] = advp(&nenv);
+    }
 	else {
-		if (env->passive)
+        if (env->passive) {
 			v->list.x[i++] = passprep();
+        }
 		v->list.x[i++] = np(&nenv);
 		env->passive = NULL;
 	}
-    if (/* DISABLES CODE */ (0) && prob(0.05))
+    if (/* DISABLES CODE */ (0) && prob(0.05)) {
 		v->list.x[i++] = adverb();
+    }
 	return v;
 }
 
@@ -1291,8 +1361,9 @@ turgid(E env)
 			v->list.x[i++] = conjugate();
 		}
 		v->list.x[i++] = sent(env);
-	} else
+    } else {
 		v->list.x[i++] = sent(env);
+    }
 	return v;
 }
 
@@ -1375,18 +1446,22 @@ main(int argc, char *argv[])
 				default:
 					abo();	/* illegal option */
 				}
-		else if (lim == 0)
+        else if (lim == 0) {
 			lim = atoi(argv[0]);
+        }
         else {
             const int value = atoi(argv[0]);
 			makeup = 1.0 - (double)value / 100.0;
         }
-	if (t == 0)
+    if (t == 0) {
 		time(&t);
-	if (makeup < 0. || makeup > 1.0)
+    }
+    if (makeup < 0. || makeup > 1.0) {
 		makeup = .95;
-	if (lim <= 0)
+    }
+    if (lim <= 0) {
 		lim = 25;
+    }
 	srand((int) t);
 
 	printf(".TL\n");
@@ -1398,8 +1473,9 @@ main(int argc, char *argv[])
 	caps();
 	printf("%s\n", buff);
     printf(".AU \"C. C. Festoon\" CCF Headquarters %ld\n", t);
-	if (eqn)
+    if (eqn) {
 		printf(".EQ\ndelim $$\n.EN\n");
+    }
 	printf(".AS\n");
 	free(env);
 	do {
@@ -1441,7 +1517,9 @@ main(int argc, char *argv[])
 				0.4+0.5/junk2, 0.8+0.6/junk2);
 				printf("%s %s %3.1f ",
 				CHOOSE(piccon), *str, 0.2+.3/junk2);
-				if (*++str == NULL) str = &picdir[0];
+                if (*++str == NULL) {
+                    str = &picdir[0];
+                }
 				printf("then %s %3.1f %s\n",
 				*str, 0.3+.2/junk2,
 				splitup(CHOOSE(adjlist)));
@@ -1506,7 +1584,9 @@ main(int argc, char *argv[])
 				buff[io] = 0;
 				printf(".FS\n%s.\n.FE\n", buff);
 			}
-			else printf("%s.\n", buff);	/* normal flush */
+            else {
+                printf("%s.\n", buff);	/* normal flush */
+            }
 		}
         if (++j > 2 && prob(0.4)) {
             printf(".P\n");
@@ -1554,11 +1634,13 @@ void
 out(char *s)
 {
     assert(s);
-	if (io == 0 && *s == ' ')
-		return;
+    if (io == 0 && *s == ' ') {
+        return;
+    }
 	if (io == 0) {
-		for (; s[io]; io++)
+        for (; s[io]; io++) {
 			buff[io] = s[io];
+        }
 		buff[0] += 'A' - 'a';
 		return;
 	}
@@ -1584,9 +1666,11 @@ void
 caps(void)
 {
 	int             i;
-	for (i = 1; i < io; i++)
-		if (buff[i - 1] == ' ' && buff[i] <= 'z' && buff[i] >= 'a')
-			buff[i] += 'A' - 'a';
+    for (i = 1; i < io; i++) {
+        if (buff[i - 1] == ' ' && buff[i] <= 'z' && buff[i] >= 'a') {
+            buff[i] += 'A' - 'a';
+        }
+    }
 }
 
 noreturn void
@@ -1611,8 +1695,9 @@ splitup(char *strlab)
 			label[j++]=' ';
 			label[j]='"';
 		}
-		else
+        else {
 			label[j] = c;
+        }
 	label[j++] = '"'; label[j] = '\0';
 	return(label);
 }
