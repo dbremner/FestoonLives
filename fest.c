@@ -284,7 +284,7 @@ verb(E env)
 		env->tense = env->ending = tense();
 	if (env->number == 0)
 		env->number = number();
-	if (0 && prob(0.1) && EQ(env->tense, env->ending)) {
+    if (/* DISABLES CODE */ (0) && prob(0.1) && EQ(env->tense, env->ending)) {
 		if (EQ(env->number, "sing")) {
 			if (EQ(env->tense, "pres"))
 				verbv->list.s[0] = "is";
@@ -1015,7 +1015,7 @@ comp(E env)
 	int             i = 0;
 	nenv = empty;
 	v->type = "comp";
-	if (0 && prob(0.001))
+    if (/* DISABLES CODE */ (0) && prob(0.001))
 		v->list.x[i++] = adjective();
 	else if (prob(0.1))
 		v->list.x[i++] = advp(&nenv);
@@ -1025,7 +1025,7 @@ comp(E env)
 		v->list.x[i++] = np(&nenv);
 		env->passive = 0;
 	}
-	if (0 && prob(0.05))
+    if (/* DISABLES CODE */ (0) && prob(0.05))
 		v->list.x[i++] = adverb();
 	return v;
 }
