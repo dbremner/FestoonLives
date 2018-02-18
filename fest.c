@@ -1475,7 +1475,7 @@ main(int argc, char *argv[])
 	io = 0;
 	pr(tree);
 	buff[io] = 0;
-	caps();
+	caps(io);
 	printf("%s\n", buff);
     printf(".AU \"C. C. Festoon\" CCF Headquarters %ld\n", t);
     if (eqn) {
@@ -1503,7 +1503,7 @@ main(int argc, char *argv[])
 			printf(".H 1 \"");
 			pr(tree);
 			buff[io] = 0;
-			caps();
+			caps(io);
 			printf("%s\"\n", buff);
 			free(env);
 		}
@@ -1668,10 +1668,10 @@ out(char *s)
 }
 
 void
-caps(void)
+caps(int iolen)
 {
 	int             i;
-    for (i = 1; i < io; i++) {
+    for (i = 1; i < iolen; i++) {
         if (buff[i - 1] == ' ' && buff[i] <= 'z' && buff[i] >= 'a') {
             buff[i] += 'A' - 'a';
         }
