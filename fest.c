@@ -1738,7 +1738,9 @@ caps(int iolen)
     assert(iolen >= 0);
     assert(iolen < (int)sizeof(buff)); //TODO remove this
     for (int i = 1; i < iolen; i++) {
-        if (buff[i - 1] == ' ' && buff[i] <= 'z' && buff[i] >= 'a') {
+        const char curr = buff[i];
+        const bool is_lowercase = curr <= 'z' && curr >= 'a';
+        if (buff[i - 1] == ' ' && is_lowercase) {
             buff[i] += 'A' - 'a';
         }
     }
