@@ -23,6 +23,14 @@ static inline bool is_tense_unset(E env)
     return env->tense == NULL;
 }
 
+static inline void set_ending(E env, char *ending)
+{
+    assert(env);
+    assert(ending);
+    assert(strlen(ending) > 0);
+    env->ending = ending;
+}
+
 static inline void set_number(E env, char *number)
 {
     assert(env);
