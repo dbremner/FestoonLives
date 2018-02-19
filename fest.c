@@ -1465,26 +1465,34 @@ main(int argc, char *argv[])
 
 	for (i = 1, ++argv; i < argc; i++, argv++)
 		if (*argv[0] == '-')	/* -pet -snnn */
-            while ((c = *++argv[0]))
+            while ((c = *++argv[0])) {
 				switch (c) {
-				case 'z':
-					flag = true;
-					continue;
-				case 'p':
-					pic = 1;
-					continue;
-				case 't':
-					tbl = true;
-					continue;
-				case 'e':
-					eqn = true;
-					continue;
-				case 's':
-				t = atoi(argv[0]+1); argv[0][1] = '\0';
-					continue;
-				default:
-					abo();	/* illegal option */
+                    case 'z': {
+                        flag = true;
+                        continue;
+                    }
+                    case 'p': {
+                        pic = 1;
+                        continue;
+                    }
+                    case 't': {
+                        tbl = true;
+                        continue;
+                    }
+                    case 'e': {
+                        eqn = true;
+                        continue;
+                    }
+                    case 's': {
+                        t = atoi(argv[0]+1);
+                        argv[0][1] = '\0';
+                        continue;
+                    }
+                    default: {
+                        abo();	/* illegal option */
+                    }
 				}
+            }
         else if (lim == 0) {
 			lim = atoi(argv[0]);
         }
@@ -1545,7 +1553,9 @@ main(int argc, char *argv[])
 		if (i % 27 == 0 && pic) {	/* Time for a picture */
 			printf(".DS CB\n.ps -2\n.PS\n");
 			str = &(CHOOSE(picdir));
-			if (*str == NULL) str = &picdir[0];
+            if (*str == NULL) {
+                str = &picdir[0];
+            }
  			junk2 = (R&07) + 3;
 			for(junk = 1; junk < junk2; junk++) {
 				printf("%s; ", *str);
@@ -1664,10 +1674,11 @@ pr(X tree)
 		for (int i = 0; tree->list.s[i]; i++) {
 			out(tree->list.s[i]);
 		}
-	} else
+    } else {
 		for (int i = 0; tree->list.x[i]; i++) {
 			pr(tree->list.x[i]);
 		}
+    }
 	free(tree);
 	return;
 }
@@ -1689,19 +1700,23 @@ out(char *s)
 		return;
 	}
     assert(io > 0);
-	if ((buff[io - 1] == ' ' || buff[io - 1] == '\n' ) && *s == ' ')
+    if ((buff[io - 1] == ' ' || buff[io - 1] == '\n' ) && *s == ' ') {
 		return;
+    }
 	if (buff[io - 1] == ' ' && *s == ',') {
 		buff[io - 1] = ',';
 		buff[io++] = '\n';
 		return;
 	}
-	if (buff[io - 1] == 'y' && *s == 'i' && s[1] == 'e')
+    if (buff[io - 1] == 'y' && *s == 'i' && s[1] == 'e') {
 		io--;
-	else if (*s == buff[io - 1] && *s != 's' && *s != 'n')
+    }
+    else if (*s == buff[io - 1] && *s != 's' && *s != 'n') {
 		io--;
-	else if (*s == 'e' && buff[io - 1] == 'a')
+    }
+    else if (*s == 'e' && buff[io - 1] == 'a') {
 		io--;
+    }
 	for (; *s;)
 		buff[io++] = *s++;
 	return;
