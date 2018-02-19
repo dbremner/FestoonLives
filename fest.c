@@ -48,7 +48,7 @@ static inline void set_tense(E env, char *tense)
     assert(tense);
     assert(strlen(tense) > 0);
     env->tense = tense;
-    env->ending = tense;
+    set_ending(env, tense);
 }
 
 static inline bool eq(const char *s, const char *t)
@@ -276,7 +276,7 @@ passive(E env)
         }
 	}
     env->passive = "pass";
-    env->ending = "pass";
+    set_ending(env, "pass");
 	return v;
 }
 
@@ -364,7 +364,7 @@ modal(E env)
     else {
 		modalv->list.s[0] = CHOOSE(past);
     }
-	env->ending = "modal";
+	set_ending(env, "modal");
 	return modalv;
 }
 
@@ -391,7 +391,7 @@ perf(E env)
     } else {
 		perfv->list.s[0] = "have";
     }
-	env->ending = "-en";
+    set_ending(env, "-en");
 	return perfv;
 }
 
@@ -425,7 +425,7 @@ prog(E env)
 	} else if (is_modal_ending(env)) {
 		progv->list.s[0] = "be";
 	}
-	env->ending = "-ing";
+    set_ending(env, "-ing");
 	return progv;
 }
 
