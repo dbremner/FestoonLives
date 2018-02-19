@@ -249,6 +249,7 @@ aux(E env)
     if (prob(0.25)) {
 		auxv->list.x[i++] = prog(env);
     }
+    assert(i < N);
     return auxv;
 }
 
@@ -307,6 +308,7 @@ vp(E env)
     if (prob(0.10)) {
 		vpv->list.x[i++] = advp(env);
     }
+    assert(i < N);
 	return vpv;
 }
 
@@ -810,6 +812,8 @@ noun(E env)
 		nounv->list.s[i++] = CHOOSE(suff);
 	}
 	if (is_plural(env)) {
+        assert(i > 0);
+        assert(i < N);
         if (lastchar(nounv->list.s[i - 1]) == 's') {
 			nounv->list.s[i] = "es";
         }
@@ -820,6 +824,7 @@ noun(E env)
 			nounv->list.s[i] = "s";
         }
 	}
+    assert(i < N);
 	return nounv;
 }
 
@@ -842,6 +847,7 @@ nounal(E env)
         ;
     }
 	for (i = 0; p->list.s[i]; i++) {
+        assert(i < N);
         if (p->list.s[i][0] == 0) {
 			continue;
         }
@@ -850,6 +856,7 @@ nounal(E env)
 		}
 		break;
 	}
+    assert(i < N);
 	return nounalv;
 }
 
@@ -864,6 +871,7 @@ adjval(void)
 	do {
 		adjvalv->list.x[i++] = adjective();
 	} while (i < N - 1 && prob(0.25));
+    assert(i < N);
 	return adjvalv;
 }
 
@@ -962,6 +970,7 @@ verbal(E env)
 		verbalv->list.x[i++] = adverb();
     }
 	verbalv->list.x[i++] = verb(env);
+    assert(i < N);
 	return verbalv;
 }
 
@@ -1115,6 +1124,7 @@ adverb(void)
 		adverbv->list.s[i++] = root();
 		adverbv->list.s[i++] = CHOOSE(suff);
 	}
+    assert(i < N);
 	return adverbv;
 }
 
@@ -1134,11 +1144,13 @@ adjective(void)
 	}
 	if (prob(makeup)) {
 		adjv->list.s[i++] = CHOOSE(adjlist);
+        assert(i < N);
 		return adjv;
 	}
 	adjv->list.s[i++] = prefix();
 	adjv->list.s[i++] = root();
 	adjv->list.s[i++] = CHOOSE(suff);
+    assert(i < N);
 	return adjv;
 }
 
@@ -1156,11 +1168,13 @@ adjph(E env)
 		adjv->list.x[i++] = rel();
 		adjv->list.x[i++] = aux(&nenv);
 		adjv->list.x[i++] = vp(&nenv);
+        assert(i < N);
 		return adjv;
 	}
 	nenv = empty;
 	adjv->list.x[i++] = prep();
 	adjv->list.x[i++] = np(&nenv);
+    assert(i < N);
 	return adjv;
 }
 
@@ -1217,6 +1231,7 @@ comp(E env)
     if (/* DISABLES CODE */ (0) && prob(0.05)) {
 		v->list.x[i++] = adverb();
     }
+    assert(i < N);
 	return v;
 }
 
@@ -1470,6 +1485,7 @@ turgid(E env)
     } else {
 		v->list.x[i++] = sent(env);
     }
+    assert(i < N);
 	return v;
 }
 
@@ -1743,10 +1759,12 @@ pr(X tree)
 	if (tree->type[0] == '-') {
 		out(" ");
 		for (int i = 0; tree->list.s[i]; i++) {
+            assert(i < N);
 			out(tree->list.s[i]);
 		}
     } else {
 		for (int i = 0; tree->list.x[i]; i++) {
+            assert(i < N);
 			pr(tree->list.x[i]);
 		}
     }
@@ -1777,8 +1795,10 @@ out(char *s)
 	if (buff[io - 1] == ' ' && *s == ',') {
 		buff[io - 1] = ',';
 		buff[io++] = '\n';
+        assert((size_t)io < sizeof(buff)); //TODO remove cast
 		return;
 	}
+    assert(strlen(s) > 1);
     if (buff[io - 1] == 'y' && *s == 'i' && s[1] == 'e') {
 		io--;
     }
@@ -1817,6 +1837,7 @@ char *
 splitup(char *strlab)
 {
     assert(strlab);
+    assert(strlen(strlab) > 0);
 	static char label[64];
     int j;
     char c;
@@ -1835,5 +1856,6 @@ splitup(char *strlab)
     }
 	label[j++] = '"';
     label[j] = '\0';
+    assert((size_t)j < sizeof(label)); //TODO remove cast
 	return(label);
 }
