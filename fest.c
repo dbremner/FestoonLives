@@ -27,6 +27,7 @@ static inline void set_number(E env, char *number)
 {
     assert(env);
     assert(number);
+    assert(strlen(number) > 0);
     assert(is_number_unset(env));
     env->number = number;
 }
