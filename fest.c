@@ -93,6 +93,12 @@ static inline bool is_past_ending(E env)
     return eq(env->ending, "past");
 }
 
+static inline bool is_pres_ending(E env)
+{
+    assert(env);
+    return eq(env->ending, "pres");
+}
+
 static inline bool is_modal_ending(E env)
 {
     assert(env);
