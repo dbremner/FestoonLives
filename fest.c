@@ -105,6 +105,12 @@ static inline bool is_modal_ending(E env)
     return eq(env->ending, "modal");
 }
 
+static inline bool is_pres_tense(E env)
+{
+    assert(env);
+    return eq(env->tense, "pres");
+}
+
 static char buff[1000];
 static int io;
 static bool debugging = false;
