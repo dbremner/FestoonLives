@@ -17,6 +17,12 @@ static inline bool is_number_unset(E env)
     return env->number == NULL;
 }
 
+static inline bool is_tense_unset(E env)
+{
+    assert(env);
+    return env->tense == NULL;
+}
+
 static inline void set_number(E env, char *number)
 {
     assert(env);
@@ -176,7 +182,7 @@ aux(E env)
     assert(env);
 	X               auxv = getxx("aux");
 	int             i = 0;
-    if (env->tense == NULL) {
+    if (is_tense_unset(env)) {
 		env->tense = env->ending = tense();
     }
     if (prob(0.25)) {
@@ -196,7 +202,7 @@ passive(E env)
 {
     assert(env);
 	X               v = getxx("-passive");
-    if (env->tense == NULL) {
+    if (is_tense_unset(env)) {
 		env->tense = env->ending = tense();
     }
     if (is_number_unset(env)) {
@@ -299,7 +305,7 @@ modal(E env)
 	static char    *pres[] = {"can", "may", "must", "shall", "will"};
 	static char    *past[] = {"could", "might", "should", "would"};
 	X               modalv = getxx("-modal");
-    if (env->tense == NULL) {
+    if (is_tense_unset(env)) {
 		env->tense = env->ending = tense();
     }
     if (eq(env->ending, "pres")) {
@@ -317,7 +323,7 @@ perf(E env)
 {
     assert(env);
 	X               perfv = getxx("-perf");
-    if (env->tense == NULL) {
+    if (is_tense_unset(env)) {
 		env->tense = env->ending = tense();
     }
     if (is_number_unset(env)) {
@@ -344,7 +350,7 @@ prog(E env)
 {
     assert(env);
 	X               progv = getxx("-prog");
-    if (env->tense == NULL) {
+    if (is_tense_unset(env)) {
 		env->tense = env->ending = tense();
     }
     if (is_number_unset(env)) {
@@ -385,7 +391,7 @@ verb(E env)
 	{"ize", "izes", "ized", "ized", "izing", "ized"}};
 	X               verbv = getxx("-verb");
 	int             i;
-    if (env->tense == NULL) {
+    if (is_tense_unset(env)) {
 		env->tense = env->ending = tense();
     }
     if (is_number_unset(env)) {
