@@ -338,7 +338,7 @@ modal(E env)
     if (is_tense_unset(env)) {
 		set_tense(env, tense());
     }
-    if (eq(env->ending, "pres")) {
+    if (is_pres_ending(env)) {
 		modalv->list.s[0] = CHOOSE(pres);
     }
     else {
@@ -361,7 +361,7 @@ perf(E env)
     }
 	if (is_past_ending(env)) {
 		perfv->list.s[0] = "had";
-	} else if (eq(env->ending, "pres")) {
+	} else if (is_pres_ending(env)) {
         if (is_singular(env)) {
 			perfv->list.s[0] = "had";
         }
@@ -386,7 +386,7 @@ prog(E env)
     if (is_number_unset(env)) {
 		set_number(env, number());
     }
-	if (eq(env->ending, "pres")) {
+	if (is_pres_ending(env)) {
         if (is_singular(env)) {
 			progv->list.s[0] = "is";
         }
@@ -446,10 +446,10 @@ verb(E env)
 	} else {
 		verbv->list.s[0] = prefix();
 		verbv->list.s[1] = root();
-        if (eq(env->ending, "pres") && is_singular(env)) {
+        if (is_pres_ending(env) && is_singular(env)) {
 			i = 1;
         }
-        else if (eq(env->ending, "pres") || is_modal_ending(env)) {
+        else if (is_pres_ending(env) || is_modal_ending(env)) {
 			i = 0;
         }
         else if (is_past_ending(env)) {
