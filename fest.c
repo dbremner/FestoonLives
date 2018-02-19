@@ -136,11 +136,15 @@ static double makeup = -1.;
 
 static inline void reset_buffer()
 {
+    assert(io > 0);
+    assert((size_t)io < sizeof(buff));
     io = 0;
 }
 
 static inline void terminate_buffer()
 {
+    assert(io > 0);
+    assert((size_t)io < sizeof(buff));
     buff[io] = 0;
 }
 
