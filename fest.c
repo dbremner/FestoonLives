@@ -347,7 +347,7 @@ perf(E env)
     if (is_number_unset(env)) {
 		set_number(env, number());
     }
-	if (eq(env->ending, "past")) {
+	if (is_past_ending(env)) {
 		perfv->list.s[0] = "had";
 	} else if (eq(env->ending, "pres")) {
         if (is_singular(env)) {
@@ -381,7 +381,7 @@ prog(E env)
         else {
 			progv->list.s[0] = "are";
         }
-	} else if (eq(env->ending, "past")) {
+	} else if (is_past_ending(env)) {
         if (is_singular(env)) {
 			progv->list.s[0] = "was";
         }
@@ -440,7 +440,7 @@ verb(E env)
         else if (eq(env->ending, "pres") || eq(env->ending, "modal")) {
 			i = 0;
         }
-        else if (eq(env->ending, "past")) {
+        else if (is_past_ending(env)) {
 			i = 2;
         }
         else if (eq(env->ending, "-en")) {
