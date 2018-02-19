@@ -77,6 +77,11 @@ static bool tbl = false;
 static int pic=0;
 static double makeup = -1.;
 
+static inline void reset_buffer()
+{
+    io = 0;
+}
+
 X 
 nomq(E env)
 {
@@ -1515,7 +1520,7 @@ main(int argc, char *argv[])
 	printf(".TL\n");
 	env = getenvq();
 	tree = np(env);
-	io = 0;
+	reset_buffer();
 	pr(tree);
 	buff[io] = 0;
 	caps(io);
@@ -1529,7 +1534,7 @@ main(int argc, char *argv[])
 	do {
 		env = getenvq();
 		tree = turgid(env);
-		io = 0;
+		reset_buffer();
 		pr(tree);
 		buff[io] = 0;
 		printf("%s.\n", buff);
@@ -1542,7 +1547,7 @@ main(int argc, char *argv[])
 		if (i % 23 == 0) {	/* Time for a section header */
 			env = getenvq();
 			tree = np(env);
-			io = 0;
+			reset_buffer();
 			printf(".H 1 \"");
 			pr(tree);
 			buff[io] = 0;
@@ -1594,7 +1599,7 @@ main(int argc, char *argv[])
 				printf("%s\tT{\n", CHOOSE(ccto));
 				free(env);
 				env = getenvq();
-				io = 0;
+				reset_buffer();
 				tree = sent(env);
 				pr(tree);
 				buff[io] = 0;
@@ -1605,7 +1610,7 @@ main(int argc, char *argv[])
 		}
 		env = getenvq();
 		tree = turgid(env);
-		io = 0;
+		reset_buffer();
 		pr(tree);
 		buff[io] = 0;
 		if (++k % 13 == 0 && prob(0.35)) {	/* Bullet list */
@@ -1615,7 +1620,7 @@ main(int argc, char *argv[])
 				printf(".LI\n");
 				free(env);
 				env = getenvq();
-				io = 0;
+				reset_buffer();
 				tree = sent(env);
 				pr(tree);
 				buff[io] = 0;
@@ -1628,7 +1633,7 @@ main(int argc, char *argv[])
 				printf("%s\\*F.\n", buff);
 				free(env);
 				env = getenvq();
-				io = 0;
+				reset_buffer();
 				tree = sent(env);
 				pr(tree);
 				buff[io] = 0;
