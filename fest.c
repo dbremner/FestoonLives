@@ -71,7 +71,7 @@ static inline bool is_plural(E env)
 
 static char buff[1000];
 static int io;
-static bool flag = false;
+static bool debugging = false;
 static bool eqn = false;
 static bool tbl = false;
 static int pic=0;
@@ -1478,7 +1478,7 @@ main(int argc, char *argv[])
             while ((c = *++argv[0])) {
 				switch (c) {
                     case 'z': {
-                        flag = true;
+                        debugging = true;
                         continue;
                     }
                     case 'p': {
@@ -1674,7 +1674,7 @@ pr(X tree)
     assert(tree);
     assert(io >= 0);
     assert(io < (int)sizeof(buff)); //TODO remove this
-	if (flag ) {
+	if (debugging ) {
 		out("<");
 		out(tree->type);
 		out(">");
