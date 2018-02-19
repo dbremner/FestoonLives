@@ -1117,6 +1117,7 @@ adverb(void)
 
 	if (prob(0.150)) {
 		adverbv->list.s[i++] = prob(.5) ? "simply" : "easily";
+        assert(i < N);
 		return adverbv;
 	}
     if (prob(0.4)) {
@@ -1130,6 +1131,7 @@ adverb(void)
 		adverbv->list.s[i++] = root();
 		adverbv->list.s[i++] = CHOOSE(suff);
 	}
+    assert(i > 0);
     assert(i < N);
 	return adverbv;
 }
@@ -1237,6 +1239,7 @@ comp(E env)
     if (/* DISABLES CODE */ (0) && prob(0.05)) {
 		v->list.x[i++] = adverb();
     }
+    assert(i > 0);
     assert(i < N);
 	return v;
 }
@@ -1491,6 +1494,7 @@ turgid(E env)
     } else {
 		v->list.x[i++] = sent(env);
     }
+    assert(i > 0);
     assert(i < N);
 	return v;
 }
