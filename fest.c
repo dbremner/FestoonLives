@@ -473,7 +473,7 @@ verb(E env)
         else if (eq(env->ending, "-ing")) {
 			i = 4;
         }
-        else if (eq(env->ending, "pass")) {
+        else if (is_pass_ending(env)) {
 			i = 5;
         }
         else {
