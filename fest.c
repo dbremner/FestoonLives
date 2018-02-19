@@ -136,7 +136,7 @@ static double makeup = -1.;
 
 static inline void reset_buffer()
 {
-    assert(io > 0);
+    assert(io >= 0); //io can be 0 when the program starts
     assert((size_t)io < sizeof(buff));
     io = 0;
 }
