@@ -232,7 +232,7 @@ passive(E env)
     if (is_number_unset(env)) {
 		set_number(env, number());
     }
-    if (eq(env->ending, "modal")) {
+    if (is_modal_ending(env)) {
 		v->list.s[0] = "be";
     }
     else if (eq(env->ending, "-en")) {
@@ -396,7 +396,7 @@ prog(E env)
         }
 	} else if (eq(env->ending, "-en")) {
 		progv->list.s[0] = "been";
-	} else if (eq(env->ending, "modal")) {
+	} else if (is_modal_ending(env)) {
 		progv->list.s[0] = "be";
 	}
 	env->ending = "-ing";
@@ -443,7 +443,7 @@ verb(E env)
         if (eq(env->ending, "pres") && is_singular(env)) {
 			i = 1;
         }
-        else if (eq(env->ending, "pres") || eq(env->ending, "modal")) {
+        else if (eq(env->ending, "pres") || is_modal_ending(env)) {
 			i = 0;
         }
         else if (is_past_ending(env)) {
