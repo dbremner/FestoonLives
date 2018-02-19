@@ -55,6 +55,7 @@ static inline bool eq(const char *s, const char *t)
 {
     assert(s);
     assert(t);
+    assert(strlen(t) > 0); //this argument is a constant string
     const bool equal = strcmp(s, t) == 0;
     return equal;
 }
