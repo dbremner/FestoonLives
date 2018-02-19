@@ -12,7 +12,12 @@ typedef struct xyz {
     }               list;
 }              *X, XX;
 typedef struct {
-    char           *number, *ending, *tense, *an, *unspec, *passive;
+    char *number;
+    char *ending;
+    char *tense;
+    char *an;
+    char *unspec;
+    char *passive;
 }              *E, EE;
 
 X nomq(E env);
