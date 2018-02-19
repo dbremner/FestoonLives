@@ -1688,6 +1688,7 @@ out(char *s)
 		buff[0] += 'A' - 'a';
 		return;
 	}
+    assert(io > 0);
 	if ((buff[io - 1] == ' ' || buff[io - 1] == '\n' ) && *s == ' ')
 		return;
 	if (buff[io - 1] == ' ' && *s == ',') {
