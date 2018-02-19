@@ -82,6 +82,11 @@ static inline void reset_buffer()
     io = 0;
 }
 
+static inline void terminate_buffer()
+{
+    buff[io] = 0;
+}
+
 X 
 nomq(E env)
 {
@@ -1522,7 +1527,7 @@ main(int argc, char *argv[])
 	tree = np(env);
 	reset_buffer();
 	pr(tree);
-	buff[io] = 0;
+	terminate_buffer();
 	caps(io);
 	printf("%s\n", buff);
     printf(".AU \"C. C. Festoon\" CCF Headquarters %ld\n", t);
@@ -1536,7 +1541,7 @@ main(int argc, char *argv[])
 		tree = turgid(env);
 		reset_buffer();
 		pr(tree);
-		buff[io] = 0;
+		terminate_buffer();
 		printf("%s.\n", buff);
 		free(env);
 	} while (prob(0.75));
@@ -1550,7 +1555,7 @@ main(int argc, char *argv[])
 			reset_buffer();
 			printf(".H 1 \"");
 			pr(tree);
-			buff[io] = 0;
+			terminate_buffer();
 			caps(io);
 			printf("%s\"\n", buff);
 			free(env);
@@ -1602,7 +1607,7 @@ main(int argc, char *argv[])
 				reset_buffer();
 				tree = sent(env);
 				pr(tree);
-				buff[io] = 0;
+				terminate_buffer();
 				printf("%s.\nT}\n", buff);
 			}
 			printf(".TE\n");
@@ -1612,7 +1617,7 @@ main(int argc, char *argv[])
 		tree = turgid(env);
 		reset_buffer();
 		pr(tree);
-		buff[io] = 0;
+		terminate_buffer();
 		if (++k % 13 == 0 && prob(0.35)) {	/* Bullet list */
 			printf("%s:\n", buff);
 			printf(".BL\n");
@@ -1623,7 +1628,7 @@ main(int argc, char *argv[])
 				reset_buffer();
 				tree = sent(env);
 				pr(tree);
-				buff[io] = 0;
+				terminate_buffer();
 				printf("%s.\n", buff);
 			} while (prob(.83));
 			printf(".LE\n");
@@ -1636,7 +1641,7 @@ main(int argc, char *argv[])
 				reset_buffer();
 				tree = sent(env);
 				pr(tree);
-				buff[io] = 0;
+				terminate_buffer();
 				printf(".FS\n%s.\n.FE\n", buff);
 			}
             else {
