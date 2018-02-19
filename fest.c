@@ -280,7 +280,7 @@ passive(E env)
 		v->list.s[0] = "being";
     }
 	else {
-        if (eq(env->tense, "past")) {
+        if (is_past_tense(env)) {
 			v->list.s[0] = is_singular(env) ? "was" : "were";
         }
         else {
