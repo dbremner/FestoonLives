@@ -1745,6 +1745,7 @@ splitup(char *strlab)
 			label[j] = c;
         }
     }
-	label[j++] = '"'; label[j] = '\0';
+	label[j++] = '"';
+    label[j] = '\0';
 	return(label);
 }
