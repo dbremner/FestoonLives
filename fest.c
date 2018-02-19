@@ -120,6 +120,12 @@ static inline bool is_modal_ending(E env)
     return eq(env->ending, "modal");
 }
 
+static inline bool is_past_tense(E env)
+{
+    assert(env);
+    return eq(env->tense, "past");
+}
+
 static inline bool is_pres_tense(E env)
 {
     assert(env);
