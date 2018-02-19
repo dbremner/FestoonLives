@@ -435,14 +435,14 @@ verb(E env)
     }
     if (/* DISABLES CODE */ (0) && prob(0.1) && eq(env->tense, env->ending)) {
 		if (is_singular(env)) {
-            if (eq(env->tense, "pres")) {
+            if (is_pres_tense(env)) {
 				verbv->list.s[0] = "is";
             }
             else {
 				verbv->list.s[0] = "was";
             }
 		} else {
-            if (eq(env->tense, "pres")) {
+            if (is_pres_tense(env)) {
 				verbv->list.s[0] = "are";
             }
             else {
