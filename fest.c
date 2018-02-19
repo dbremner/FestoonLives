@@ -1815,6 +1815,7 @@ out(char *s)
     else if (*s == 'e' && buff[io - 1] == 'a') {
 		io--;
     }
+    assert(io >= 0);
 	for (; *s;)
 		buff[io++] = *s++;
 	return;
