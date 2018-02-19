@@ -242,7 +242,7 @@ aux(E env)
 {
     assert(env);
 	X               auxv = getxx("aux");
-	int             i = 0;
+	size_t          i = 0;
     if (is_tense_unset(env)) {
 		set_tense(env, tense());
     }
@@ -305,7 +305,7 @@ vp(E env)
 {
     assert(env);
 	X               vpv = getxx("vp");
-	int             i = 0;
+	size_t          i = 0;
     if (prob(0.5)) {
 		vpv->list.x[i++] = passive(env);
     }
@@ -453,7 +453,7 @@ verb(E env)
 	{"fy", "fies", "fied", "fied", "fying", "fied"},
 	{"ize", "izes", "ized", "ized", "izing", "ized"}};
 	X               verbv = getxx("-verb");
-	int             i;
+	size_t          i;
     if (is_tense_unset(env)) {
 		set_tense(env, tense());
     }
@@ -801,7 +801,7 @@ noun(E env)
 		"ar", "or", "ist", "fulness",
 		"kin", "cule", "icle", "y", "ability", "iosos"};
 	X               nounv = getxx("-noun");
-	int             i = 0;
+	size_t          i = 0;
     if (is_number_unset(env)) {
 		set_number(env, number());
     }
@@ -839,7 +839,7 @@ nounal(E env)
 {
     assert(env);
 	X               nounalv = getxx("nounal");
-	int             i = 0;
+	size_t          i = 0;
 	X               p;
 	if (prob(0.15)) {
 		nounalv->list.x[i++] = adjval();
@@ -870,7 +870,7 @@ X
 adjval(void)
 {
 	X               adjvalv = getxx("adjval");
-	int             i = 0;
+	size_t          i = 0;
 	if (prob(0.25)) {
 		adjvalv->list.x[i++] = adverb();
 	}
@@ -971,7 +971,7 @@ verbal(E env)
 {
     assert(env);
 	X               verbalv = getxx("verbal");
-	int             i = 0;
+	size_t          i = 0;
     if (prob(0.25)) {
 		verbalv->list.x[i++] = adverb();
     }
@@ -1113,7 +1113,7 @@ adverb(void)
 		"ably", "ily", "ly", "ly", "ly"};
 
 	X               adverbv = getxx("-adverb");
-	int             i = 0;
+	size_t          i = 0;
 
 	if (prob(0.150)) {
 		adverbv->list.s[i++] = prob(.5) ? "simply" : "easily";
@@ -1142,7 +1142,7 @@ adjective(void)
 	"ile", "able", "ible", "istic", "ic",
 	"an", "ian", "ish", "ite", "al", "less"};
 	X               adjv = getxx("-adjective");
-	int             i = 0;
+	size_t          i = 0;
 
 	if (prob(0.2)) {
 		adjv->list.s[i++] = "not ";
@@ -1167,7 +1167,7 @@ adjph(E env)
 	X               adjv = getxx("adjph");
 	EE              nenv;
 	static EE       empty;
-	int             i = 0;
+	size_t          i = 0;
 	if (prob(0.25)) {
 		nenv = *env;
 		nenv.tense = NULL;
@@ -1219,7 +1219,7 @@ comp(E env)
 	X               v = getxx("comp");
 	EE              nenv;
 	static EE       empty;
-	int             i = 0;
+	size_t          i = 0;
 	nenv = empty;
     if (/* DISABLES CODE */ (0) && prob(0.001)) {
 		v->list.x[i++] = adjective();
@@ -1455,7 +1455,7 @@ turgid(E env)
 {
     assert(env);
 	X               v = getxx("turgid");
-	int             i = 0;
+	size_t          i = 0;
 
 	if (prob(T * 1.5)) {
 		v->list.x[i++] = lconjadv();
