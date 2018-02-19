@@ -209,7 +209,8 @@ passive(E env)
 			v->list.s[0] = is_singular(env) ? "is" : "are";
         }
 	}
-	env->passive = env->ending = "pass";
+    env->passive = "pass";
+    env->ending = "pass";
 	return v;
 }
 
