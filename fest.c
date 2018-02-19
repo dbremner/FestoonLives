@@ -1804,7 +1804,8 @@ out(char *s)
         assert((size_t)io < sizeof(buff)); //TODO remove cast
 		return;
 	}
-    assert(strlen(s) > 1);
+    //assert(strlen(s) > 1);
+    //TODO s can be an empty string
     if (buff[io - 1] == 'y' && *s == 'i' && s[1] == 'e') {
 		io--;
     }
