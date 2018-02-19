@@ -194,7 +194,7 @@ aux(E env)
 	X               auxv = getxx("aux");
 	int             i = 0;
     if (is_tense_unset(env)) {
-		env->tense = env->ending = tense();
+		set_tense(env, tense());
     }
     if (prob(0.25)) {
 		auxv->list.x[i++] = modal(env);
@@ -214,7 +214,7 @@ passive(E env)
     assert(env);
 	X               v = getxx("-passive");
     if (is_tense_unset(env)) {
-		env->tense = env->ending = tense();
+		set_tense(env, tense());
     }
     if (is_number_unset(env)) {
 		set_number(env, number());
@@ -317,7 +317,7 @@ modal(E env)
 	static char    *past[] = {"could", "might", "should", "would"};
 	X               modalv = getxx("-modal");
     if (is_tense_unset(env)) {
-		env->tense = env->ending = tense();
+		set_tense(env, tense());
     }
     if (eq(env->ending, "pres")) {
 		modalv->list.s[0] = CHOOSE(pres);
@@ -335,7 +335,7 @@ perf(E env)
     assert(env);
 	X               perfv = getxx("-perf");
     if (is_tense_unset(env)) {
-		env->tense = env->ending = tense();
+		set_tense(env, tense());
     }
     if (is_number_unset(env)) {
 		set_number(env, number());
@@ -362,7 +362,7 @@ prog(E env)
     assert(env);
 	X               progv = getxx("-prog");
     if (is_tense_unset(env)) {
-		env->tense = env->ending = tense();
+		set_tense(env, tense());
     }
     if (is_number_unset(env)) {
 		set_number(env, number());
@@ -403,7 +403,7 @@ verb(E env)
 	X               verbv = getxx("-verb");
 	int             i;
     if (is_tense_unset(env)) {
-		env->tense = env->ending = tense();
+		set_tense(env, tense());
     }
     if (is_number_unset(env)) {
 		set_number(env, number());
