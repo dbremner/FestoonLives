@@ -87,6 +87,12 @@ static inline bool is_plural(E env)
     return plural;
 }
 
+static inline bool is_pass_ending(E env)
+{
+    assert(env);
+    return eq(env->ending, "pass");
+}
+
 static inline bool is_past_ending(E env)
 {
     assert(env);
