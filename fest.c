@@ -31,6 +31,17 @@ static inline void set_number(E env, char *number)
     env->number = number;
 }
 
+static inline void set_tense(E env, char *tense)
+{
+    assert(env);
+    assert(is_tense_unset(env));
+    assert(env->ending == NULL); // TODO is this true?
+    assert(tense);
+    assert(strlen(tense) > 0);
+    env->tense = tense;
+    env->ending = tense;
+}
+
 static inline bool eq(const char *s, const char *t)
 {
     assert(s);
