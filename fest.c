@@ -1768,12 +1768,12 @@ pr(X tree)
 	}
 	if (tree->type[0] == '-') {
 		out(" ");
-		for (int i = 0; tree->list.s[i]; i++) {
+		for (size_t i = 0; tree->list.s[i]; i++) {
             assert(i < N);
 			out(tree->list.s[i]);
 		}
     } else {
-		for (int i = 0; tree->list.x[i]; i++) {
+		for (size_t i = 0; tree->list.x[i]; i++) {
             assert(i < N);
 			pr(tree->list.x[i]);
 		}
