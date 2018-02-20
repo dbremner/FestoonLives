@@ -66,6 +66,6 @@ void pr(X tree);
 void out(char *s);
 void caps(size_t iolen, char *buffer, size_t buffer_len);
 noreturn void abo(void);
-char * splitup(char *strlab);
+char * splitup(const char *strlab);
 
 #endif

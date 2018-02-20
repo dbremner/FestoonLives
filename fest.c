@@ -1439,15 +1439,15 @@ equation(void)
 {
 	X		v = getxx("-eqn");
     static char eqnbuff[100];
-	static char *eqnelem[] = {"int", "sum", "prod", "union", "inter"};
-	static char *eqnfn[] = { "sin", "cos", "tan", "arc", "det",
+	static const char *eqnelem[] = {"int", "sum", "prod", "union", "inter"};
+	static const char *eqnfn[] = { "sin", "cos", "tan", "arc", "det",
 		"log", "exp", "f", "g", "sinh", "O", "J sub 0", "J sub 1",
 		"P sub i", "gamma", "zeta" };
-	static char *eqnval[] = { "0", "DELTA", "GAMMA", "LAMBDA",
+	static const char *eqnval[] = { "0", "DELTA", "GAMMA", "LAMBDA",
 		"OMEGA", "PHI", "PSI", "SIGMA", "THETA", "UPSILON",
 		"XI", "alpha", "beta", "gamma", "delta", "epsilon",
 		"eta", "kappa","lambda", "mu", "omega", "x", "zeta", "inf"};
-	static char *eqnrel[] = {"=", "<=", ">=", "==", "!=", "approx"};
+	static const char *eqnrel[] = {"=", "<=", ">=", "==", "!=", "approx"};
 
 	char x = 'a' + (R)%26;
 	snprintf(eqnbuff, sizeof(eqnbuff), "$%s from %c=%d to %s %s ( %c ) d%c %s %s$",
@@ -1507,10 +1507,10 @@ turgid(E env)
 int
 main(int argc, char *argv[])
 {
-	static char    *furniture[] = {"WASTEBASKET", "ASHTRAY", "TABLE",
+	static const char    *furniture[] = {"WASTEBASKET", "ASHTRAY", "TABLE",
 	"DESK DRAWER", "COAT LOCKER", "BOOKSHELF"};
 
-	static char    *ccto[] = {
+	static const char    *ccto[] = {
 		"J. N. Akkerhuis",
 		"J. J. Argosy",
 		"M. D. Banal",
@@ -1547,8 +1547,8 @@ main(int argc, char *argv[])
 		"P. Terra-Cotta",
 	"U. G. Winnow"};
 
-	static char	*picelem[] = { "box", "ellipse", "box", "box"};
-	static char	*piccon[] = { "arrow", "line", "line <-", "line <->",
+	static const char	*picelem[] = { "box", "ellipse", "box", "box"};
+	static const char	*piccon[] = { "arrow", "line", "line <-", "line <->",
 	"spline", "spline <-", "spline <->"};
 	static char	*picdir[] = { "right", "down right", "down",
 	"left", "up left", "left", "down", "down right", NULL};
@@ -1847,7 +1847,7 @@ abo(void) {
 }
 
 char *
-splitup(char *strlab)
+splitup(const char *strlab)
 {
     assert(strlab);
     assert(strlen(strlab) > 0);
