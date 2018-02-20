@@ -241,11 +241,11 @@ X
 aux(E env)
 {
     assert(env);
-	X               auxv = getxx("aux");
-	size_t          i = 0;
     if (is_tense_unset(env)) {
-		set_tense(env, tense());
+        set_tense(env, tense());
     }
+    X               auxv = getxx("aux");
+    size_t          i = 0;
     if (prob(0.25)) {
 		auxv->list.x[i++] = modal(env);
     }
@@ -263,13 +263,13 @@ X
 passive(E env)
 {
     assert(env);
-	X               v = getxx("-passive");
     if (is_tense_unset(env)) {
-		set_tense(env, tense());
+        set_tense(env, tense());
     }
     if (is_number_unset(env)) {
-		set_number(env, number());
+        set_number(env, number());
     }
+    X               v = getxx("-passive");
     if (is_modal_ending(env)) {
 		v->list.s[0] = "be";
     }
@@ -329,10 +329,10 @@ art(E env)
 		"no",
 		"an undue number of",
 	"a number of"};
-	X               artv = getxx("-art");
     if (is_number_unset(env)) {
-		set_number(env, number());
+        set_number(env, number());
     }
+    X               artv = getxx("-art");
 	if (env->unspec == NULL && prob(0.33)) {
         if (is_singular(env)) {
 			artv->list.s[0] = CHOOSE(aspecsg);
@@ -367,10 +367,10 @@ modal(E env)
     assert(env);
 	static char    *pres[] = {"can", "may", "must", "shall", "will"};
 	static char    *past[] = {"could", "might", "should", "would"};
-	X               modalv = getxx("-modal");
     if (is_tense_unset(env)) {
-		set_tense(env, tense());
+        set_tense(env, tense());
     }
+    X               modalv = getxx("-modal");
     if (is_pres_ending(env)) {
 		modalv->list.s[0] = CHOOSE(pres);
     }
@@ -385,13 +385,13 @@ X
 perf(E env)
 {
     assert(env);
-	X               perfv = getxx("-perf");
     if (is_tense_unset(env)) {
-		set_tense(env, tense());
+        set_tense(env, tense());
     }
     if (is_number_unset(env)) {
-		set_number(env, number());
+        set_number(env, number());
     }
+    X               perfv = getxx("-perf");
 	if (is_past_ending(env)) {
 		perfv->list.s[0] = "had";
 	} else if (is_pres_ending(env)) {
@@ -412,13 +412,13 @@ X
 prog(E env)
 {
     assert(env);
-	X               progv = getxx("-prog");
     if (is_tense_unset(env)) {
-		set_tense(env, tense());
+        set_tense(env, tense());
     }
     if (is_number_unset(env)) {
-		set_number(env, number());
+        set_number(env, number());
     }
+    X               progv = getxx("-prog");
 	if (is_pres_ending(env)) {
         if (is_singular(env)) {
 			progv->list.s[0] = "is";
@@ -453,7 +453,6 @@ verb(E env)
 	{"fy", "fies", "fied", "fied", "fying", "fied"},
 	{"ize", "izes", "ized", "ized", "izing", "ized"}};
 	X               verbv = getxx("-verb");
-	size_t          i;
     if (is_tense_unset(env)) {
 		set_tense(env, tense());
     }
@@ -477,6 +476,7 @@ verb(E env)
             }
 		}
 	} else {
+        size_t          i;
 		verbv->list.s[0] = prefix();
 		verbv->list.s[1] = root();
         if (is_pres_ending(env) && is_singular(env)) {
@@ -800,11 +800,11 @@ noun(E env)
 		"ery", "ory", "ette", "let", "ling", "ule", "kin",
 		"ar", "or", "ist", "fulness",
 		"kin", "cule", "icle", "y", "ability", "iosos"};
-	X               nounv = getxx("-noun");
-	size_t          i = 0;
     if (is_number_unset(env)) {
-		set_number(env, number());
+        set_number(env, number());
     }
+    X               nounv = getxx("-noun");
+    size_t          i = 0;
 	if (prob(makeup)) {
 		if (prob(0.05)) {
 			nounv->list.s[i++] = CHOOSE(adjlist);
@@ -1169,18 +1169,18 @@ adjph(E env)
 	X               adjv = getxx("adjph");
 	EE              nenv;
 	static EE       empty;
-	size_t          i = 0;
-	if (prob(0.25)) {
-		nenv = *env;
-		nenv.tense = NULL;
-		adjv->list.x[i++] = rel();
-		adjv->list.x[i++] = aux(&nenv);
-		adjv->list.x[i++] = vp(&nenv);
+    if (prob(0.25)) {
+        nenv = *env;
+        nenv.tense = NULL;
+        size_t i = 0;
+        adjv->list.x[i++] = rel();
+        adjv->list.x[i++] = aux(&nenv);
+        adjv->list.x[i++] = vp(&nenv);
         assert(i < N);
-		return adjv;
-	}
-    assert(i == 0);
-	nenv = empty;
+        return adjv;
+    }
+    nenv = empty;
+    size_t i = 0;
 	adjv->list.x[i++] = prep();
 	adjv->list.x[i++] = np(&nenv);
     assert(i > 0);
