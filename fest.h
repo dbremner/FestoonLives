@@ -64,7 +64,7 @@ X turgid(E env);
 int main(int argc, char *argv[]);
 void pr(X tree);
 void out(char *s);
-void caps(size_t iolen);
+void caps(size_t iolen, char *buffer, size_t buffer_len);
 noreturn void abo(void);
 char * splitup(char *strlab);
 

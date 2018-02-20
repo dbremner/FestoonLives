@@ -1619,7 +1619,7 @@ main(int argc, char *argv[])
 	reset_buffer();
 	pr(tree);
 	terminate_buffer();
-	caps(io);
+	caps(io, buff, sizeof(buff));
 	printf("%s\n", buff);
     printf(".AU \"C. C. Festoon\" CCF Headquarters %ld\n", t);
     if (eqn) {
@@ -1647,7 +1647,7 @@ main(int argc, char *argv[])
 			printf(".H 1 \"");
 			pr(tree);
 			terminate_buffer();
-			caps(io);
+			caps(io, buff, sizeof(buff));
 			printf("%s\"\n", buff);
 			free(env);
 		}
@@ -1828,14 +1828,14 @@ out(char *s)
 }
 
 void
-caps(size_t iolen)
+caps(size_t iolen, char *buffer, size_t buffer_len)
 {
-    assert(iolen < sizeof(buff));
+    assert(iolen < buffer_len);
     for (size_t i = 1; i < iolen; i++) {
-        const char curr = buff[i];
+        const char curr = buffer[i];
         const bool is_lowercase = curr <= 'z' && curr >= 'a';
-        if (buff[i - 1] == ' ' && is_lowercase) {
-            buff[i] += 'A' - 'a';
+        if (buffer[i - 1] == ' ' && is_lowercase) {
+            buffer[i] += 'A' - 'a';
         }
     }
 }
