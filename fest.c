@@ -133,7 +133,7 @@ static inline bool is_pres_tense(E env)
 }
 
 static char buff[1000];
-static int io;
+static size_t io;
 static bool debugging = false;
 static bool eqn = false;
 static bool tbl = false;
@@ -142,15 +142,15 @@ static double makeup = -1.;
 
 static inline void reset_buffer()
 {
-    assert(io >= 0); //io can be 0 when the program starts
-    assert((size_t)io < sizeof(buff));
+    //io can be 0 when the program starts
+    assert(io < sizeof(buff));
     io = 0;
 }
 
 static inline void terminate_buffer()
 {
     assert(io > 0);
-    assert((size_t)io < sizeof(buff));
+    assert(io < sizeof(buff));
     buff[io] = 0;
 }
 
@@ -1761,8 +1761,7 @@ void
 pr(X tree)
 {
     assert(tree);
-    assert(io >= 0);
-    assert(io < (int)sizeof(buff)); //TODO remove this
+    assert(io < sizeof(buff));
 	if (debugging ) {
 		out("<");
 		out(tree->type);
@@ -1788,8 +1787,7 @@ void
 out(char *s)
 {
     assert(s);
-    assert(io >= 0);
-    assert(io < (int)sizeof(buff)); //TODO remove this
+    assert(io < sizeof(buff));
     if (io == 0 && *s == ' ') {
         return;
     }
@@ -1807,7 +1805,7 @@ out(char *s)
 	if (buff[io - 1] == ' ' && *s == ',') {
 		buff[io - 1] = ',';
 		buff[io++] = '\n';
-        assert((size_t)io < sizeof(buff)); //TODO remove cast
+        assert(io < sizeof(buff));
 		return;
 	}
     //assert(strlen(s) > 1);
@@ -1821,18 +1819,17 @@ out(char *s)
     else if (*s == 'e' && buff[io - 1] == 'a') {
 		io--;
     }
-    assert(io >= 0);
+    assert(io < sizeof(buff));
 	for (; *s;)
 		buff[io++] = *s++;
 	return;
 }
 
 void
-caps(int iolen)
+caps(size_t iolen)
 {
-    assert(iolen >= 0);
-    assert(iolen < (int)sizeof(buff)); //TODO remove this
-    for (int i = 1; i < iolen; i++) {
+    assert(iolen < sizeof(buff));
+    for (size_t i = 1; i < iolen; i++) {
         const char curr = buff[i];
         const bool is_lowercase = curr <= 'z' && curr >= 'a';
         if (buff[i - 1] == ' ' && is_lowercase) {
