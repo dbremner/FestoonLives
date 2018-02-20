@@ -1179,9 +1179,11 @@ adjph(E env)
         assert(i < N);
 		return adjv;
 	}
+    assert(i == 0);
 	nenv = empty;
 	adjv->list.x[i++] = prep();
 	adjv->list.x[i++] = np(&nenv);
+    assert(i > 0);
     assert(i < N);
 	return adjv;
 }
