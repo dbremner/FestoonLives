@@ -145,6 +145,8 @@ static inline void reset_buffer()
     //io can be 0 when the program starts
     assert(io < sizeof(buff));
     io = 0;
+    //unnecessary in theory
+    memset(buff, 0, sizeof(buff));
 }
 
 static inline void terminate_buffer()
