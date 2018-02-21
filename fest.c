@@ -1794,7 +1794,7 @@ out(char *s)
         return;
     }
 	if (io == 0) {
-        for (; s[io]; io++) {
+        for (; s[io] != '\0'; io++) {
 			buff[io] = s[io];
         }
 		buff[0] += 'A' - 'a';
@@ -1822,7 +1822,7 @@ out(char *s)
 		io--;
     }
     assert(io < sizeof(buff));
-	for (; *s;)
+	for (; *s != '\0';)
 		buff[io++] = *s++;
 	return;
 }
