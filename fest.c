@@ -1,5 +1,6 @@
 /* %W%	 */
 #include <assert.h>
+#include <ctype.h>
 #include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -1833,9 +1834,9 @@ caps(size_t iolen, char *buffer, size_t buffer_len)
     assert(iolen < buffer_len);
     for (size_t i = 1; i < iolen; i++) {
         const char curr = buffer[i];
-        const bool is_lowercase = curr >= 'a' && curr <= 'z';
+        const bool is_lowercase = islower(curr);
         if (buffer[i - 1] == ' ' && is_lowercase) {
-            buffer[i] += 'A' - 'a';
+            buffer[i] = (char)toupper(curr);
         }
     }
 }
