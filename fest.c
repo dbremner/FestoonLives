@@ -1833,7 +1833,7 @@ caps(size_t iolen, char *buffer, size_t buffer_len)
     assert(iolen < buffer_len);
     for (size_t i = 1; i < iolen; i++) {
         const char curr = buffer[i];
-        const bool is_lowercase = curr <= 'z' && curr >= 'a';
+        const bool is_lowercase = curr >= 'a' && curr <= 'z';
         if (buffer[i - 1] == ' ' && is_lowercase) {
             buffer[i] += 'A' - 'a';
         }
