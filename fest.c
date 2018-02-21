@@ -1764,6 +1764,8 @@ void
 pr(X tree)
 {
     assert(tree);
+    assert(tree->type);
+    assert(strlen(tree->type));
     assert(io < sizeof(buff));
 	if (debugging ) {
 		out("<");
