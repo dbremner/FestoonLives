@@ -961,7 +961,7 @@ getxx(char *type)
     assert(type);
     assert(strlen(type) > 0);
     X rv = (X) calloc(sizeof *rv, 1);
-    if (rv == 0) {
+    if (rv == NULL) {
         fprintf(stderr, "festoon: outa space\n");
         exit(EXIT_FAILURE);
     }
