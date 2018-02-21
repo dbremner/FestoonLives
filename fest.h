@@ -6,7 +6,7 @@
 #define N 8
 typedef struct xyz {
     char           *type;
-    union {
+    struct {
         struct xyz     *x[N];
         char           *s[N];
     }               list;
