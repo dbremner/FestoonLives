@@ -963,7 +963,7 @@ getxx(char *type)
     X rv = (X) calloc(sizeof *rv, 1);
     if (rv == 0) {
         fprintf(stderr, "festoon: outa space\n");
-        exit(1);
+        exit(EXIT_FAILURE);
     }
     rv->type = type;
     return rv;
@@ -1275,7 +1275,7 @@ getenvq(void)
 	E v = (E) calloc(sizeof *v, 1);
     if (v == NULL) {
         printf("outa room\n");
-        exit(1);
+        exit(EXIT_FAILURE);
     }
 	return v;
 }
@@ -1757,7 +1757,7 @@ main(int argc, char *argv[])
 		}
 	}
 	printf(".NE\n");
-	exit(0);
+	exit(EXIT_SUCCESS);
 }
 
 void
@@ -1845,7 +1845,7 @@ caps(size_t iolen, char *buffer, size_t buffer_len)
 noreturn void
 abo(void) {
 	fprintf(stderr, "usage: festoon [-pet] [-sSEED] [SENTENCES] [%%-invented-nouns]\n");
-	exit(1);
+	exit(EXIT_FAILURE);
 }
 
 char *
