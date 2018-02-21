@@ -1800,7 +1800,7 @@ out(char *s)
         for (; s[io] != '\0'; io++) {
 			buff[io] = s[io];
         }
-		buff[0] += 'A' - 'a';
+		buff[0] = (char)toupper(buff[0]);
 		return;
 	}
     assert(io > 0);
