@@ -1834,8 +1834,7 @@ caps(size_t iolen, char *buffer, size_t buffer_len)
     assert(iolen < buffer_len);
     for (size_t i = 1; i < iolen; i++) {
         const char curr = buffer[i];
-        const bool is_lowercase = islower(curr);
-        if (buffer[i - 1] == ' ' && is_lowercase) {
+        if (buffer[i - 1] == ' ' && islower(curr)) {
             buffer[i] = (char)toupper(curr);
         }
     }
