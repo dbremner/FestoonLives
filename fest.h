@@ -5,19 +5,19 @@
 
 #define N 8
 typedef struct xyz {
-    char           *type;
+    const char         *type;
     struct {
         struct xyz     *x[N];
-        char           *s[N];
+        const char     *s[N];
     }               list;
 }              *X, XX;
 typedef struct {
-    char *number;
-    char *ending;
-    char *tense;
-    char *an;
-    char *unspec;
-    char *passive;
+    const char *number;
+    const char *ending;
+    const char *tense;
+    const char *an;
+    const char *unspec;
+    const char *passive;
 }              *E, EE;
 
 X nomq(E env);
@@ -37,12 +37,12 @@ X verb(E env);
 X noun(E env);
 X nounal(E env);
 X adjval(void);
-char * prefix(void);
-char * root(void);
+const char * prefix(void);
+const char * root(void);
 int prob(double f);
-char * tense(void);
-char * number(void);
-X getxx(char *type);
+const char * tense(void);
+const char * number(void);
+X getxx(const char *type);
 X verbal(E env);
 X adverb(void);
 X adjective(void);
@@ -63,7 +63,7 @@ X equation(void);
 X turgid(E env);
 int main(int argc, char *argv[]);
 void pr(X tree);
-void out(char *s);
+void out(const char *s);
 void caps(size_t iolen, char *buffer, size_t buffer_len);
 noreturn void abo(void);
 char * splitup(const char *strlab);

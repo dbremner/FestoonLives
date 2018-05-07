@@ -24,7 +24,7 @@ static inline bool is_tense_unset(E env)
     return env->tense == NULL;
 }
 
-static inline void set_ending(E env, char *ending)
+static inline void set_ending(E env, const char *ending)
 {
     assert(env);
     assert(ending);
@@ -32,7 +32,7 @@ static inline void set_ending(E env, char *ending)
     env->ending = ending;
 }
 
-static inline void set_number(E env, char *number)
+static inline void set_number(E env, const char *number)
 {
     assert(env);
     assert(number);
@@ -41,7 +41,7 @@ static inline void set_number(E env, char *number)
     env->number = number;
 }
 
-static inline void set_tense(E env, char *tense)
+static inline void set_tense(E env, const char *tense)
 {
     assert(env);
     assert(is_tense_unset(env));
@@ -186,7 +186,7 @@ nomq(E env)
 X 
 rel(void)
 {
-	static char    *c[] = {"that", "which"};
+	static const char    *c[] = {"that", "which"};
 	X               v = getxx("-rel");
 	v->list.s[0] = CHOOSE(c);
 	return v;
@@ -325,10 +325,10 @@ X
 art(E env)
 {
     assert(env);
-	static char    *aspecsg[] = {"the", "the", "the", "the", "the", "this", "this", "that"};
-	static char    *aspecpl[] = {"the", "the", "the", "the", "the", "these", "those"};
-	static char    *aunssg[] = {"a", "a", "a", "a", "a", "a", "a", "much", "each", "any"};
-	static char    *aunspl[] = {"some", "a few", "a couple", "several", "many", "all",
+	static const char    *aspecsg[] = {"the", "the", "the", "the", "the", "this", "this", "that"};
+	static const char    *aspecpl[] = {"the", "the", "the", "the", "the", "these", "those"};
+	static const char    *aunssg[] = {"a", "a", "a", "a", "a", "a", "a", "much", "each", "any"};
+	static const char    *aunspl[] = {"some", "a few", "a couple", "several", "many", "all",
 		"no",
 		"an undue number of",
 	"a number of"};
@@ -368,8 +368,8 @@ X
 modal(E env)
 {
     assert(env);
-	static char    *pres[] = {"can", "may", "must", "shall", "will"};
-	static char    *past[] = {"could", "might", "should", "would"};
+	static const char    *pres[] = {"can", "may", "must", "shall", "will"};
+	static const char    *past[] = {"could", "might", "should", "would"};
     if (is_tense_unset(env)) {
         set_tense(env, tense());
     }
@@ -450,7 +450,7 @@ verb(E env)
 {
     assert(env);
 	/* they pres, he pres, they past, they perf, they prog, they pass */
-	static char    *ends[][6] = {{"ate", "ates", "ated", "ated", "ating", "ated"},
+	static const char    *ends[][6] = {{"ate", "ates", "ated", "ated", "ating", "ated"},
 	{"en", "ens", "ened", "ened", "ening", "ened"},
 	{"esce", "esces", "esced", "esced", "escing", "esced"},
 	{"fy", "fies", "fied", "fied", "fying", "fied"},
@@ -509,7 +509,7 @@ verb(E env)
 	return verbv;
 }
 
-static char    *nounlist[] = {"final completion",
+static const char    *nounlist[] = {"final completion",
 	"final ending", "final outcome",
 	"adaptation", "appearance", "argument", "circumstance",
 	"confession", "confidence", "delimitation", "dilution",
@@ -722,7 +722,7 @@ static char    *nounlist[] = {"final completion",
 	"actual fact",
 	"true fact", "underlying purpose", "viable alternative"};
 
-static char    *adjlist[] = {"concrete", "abstract", "procedural",
+static const char    *adjlist[] = {"concrete", "abstract", "procedural",
 	"real", "ideal", "functional", "prototype",
 	"effective", "capable", "incremental",
 	"perceived", "associated", "interdepartmental",
@@ -794,7 +794,7 @@ X
 noun(E env)
 {
     assert(env);
-	static char    *suff[] = {"ion", "sion", "tion", "age",
+	static const char    *suff[] = {"ion", "sion", "tion", "age",
 		"ness", "ment", "ure",
 		"ity", "iety", "ty", "ence", "ency", "ance",
 		"ancy", "tude", "hood", "ture", "ate", "art", "ard",
@@ -884,10 +884,10 @@ adjval(void)
 	return adjvalv;
 }
 
-char           *
+const char *
 prefix(void)
 {
-	static char    *pref[] = {
+	static const char    *pref[] = {
 		"amb", "ambi", "super", "hyper", "an", "tra", "trans", "post", "palim",
 		"omni", "pan", "circ", "circum", "peri", "a", "ab", "abs", "de", "apo",
 		"re", "ana", "mal", "ante", "pre", "fore", "pro", "infra", "para",
@@ -909,10 +909,10 @@ prefix(void)
 	return CHOOSE(pref);
 }
 
-char           *
+const char *
 root(void)
 {
-	static char    *root[] = {
+	static const char    *root[] = {
 		"pan", "omni", "arch", "zo", "rog", "rogat", "cred", "flect", "flex",
 		"test", "hem", "hemato", "nasc", "nat", "bibl", "fer", "voc", "port", "lat",
 		"fortuna", "ped", "chrom", "vinc", "vict", "crea", "cise", "mort", "mors",
@@ -943,20 +943,20 @@ prob(double f)
 	return (R) < (f * 32767.0);
 }
 
-char           *
+const char           *
 tense(void)
 {
 	return prob(0.5) ? "pres" : "past";
 }
 
-char           *
+const char           *
 number(void)
 {
 	return prob(0.25) ? "plural" : "sing";
 }
 
 X
-getxx(char *type)
+getxx(const char *type)
 {
     assert(type);
     assert(strlen(type) > 0);
@@ -983,7 +983,7 @@ verbal(E env)
 	return verbalv;
 }
 
-static char    *advlist[] = {"absolutely", "functionally",
+static const char    *advlist[] = {"absolutely", "functionally",
 	"accordingly", "broadly", "actionably", "actually",
 	"additionally",
 	"ambiguously", "amply",
@@ -1098,7 +1098,7 @@ static char    *advlist[] = {"absolutely", "functionally",
 X 
 adverb(void)
 {
-	static char    *wordy[] = {"very ", "extremely ", "generally ",
+	static const char    *wordy[] = {"very ", "extremely ", "generally ",
 		"reasonably ", "fundamentally ", "essentially ", "particularly ",
 		"very ",
 		"very ", "very ",
@@ -1112,7 +1112,7 @@ adverb(void)
 		"rather ", "fairly ", "relatively ", "comparatively ",
 		"moderately ",
 		"totally ", "very ", "quite "};
-	static char    *suff[] = {"wardly", "ably", "wisely",
+	static const char    *suff[] = {"wardly", "ably", "wisely",
 		"ably", "ily", "ly", "ly", "ly"};
 
 	X               adverbv = getxx("-adverb");
@@ -1142,7 +1142,7 @@ adverb(void)
 X 
 adjective(void)
 {
-	static char    *suff[] = {"ive", "ful", "ous", "some", "oid",
+	static const char    *suff[] = {"ive", "ful", "ous", "some", "oid",
 	"ine", "esque", "en", "an",
 	"ile", "able", "ible", "istic", "ic",
 	"an", "ian", "ish", "ite", "al", "less"};
@@ -1191,7 +1191,7 @@ adjph(E env)
 	return adjv;
 }
 
-static char    *preplist[] = {"across", "by", "in", "of",
+static const char    *preplist[] = {"across", "by", "in", "of",
 	"near", "under", "over",
 	"in back of", "below", "behind", "of", "of", "of", "of",
 	"centered around", "centered about",
@@ -1259,7 +1259,7 @@ advp(E env)
 	return v;
 }
 
-static char    *vpreplist[] = {"to", "at", "by", "from", "with", "for"};
+static const char    *vpreplist[] = {"to", "at", "by", "from", "with", "for"};
 
 X 
 vprep(void)
@@ -1292,7 +1292,7 @@ comma(E env)
 	return v;
 }
 
-static char    *conjadvlist[] = {"we believe", "naturally", "therefore",
+static const char    *conjadvlist[] = {"we believe", "naturally", "therefore",
 	"moreover", "obviously"};
 
 X 
@@ -1303,7 +1303,7 @@ conjadv(void)
 	return v;
 }
 
-static char    *lconjlist[] = {"therefore", "however", "nevertheless",
+static const char    *lconjlist[] = {"therefore", "however", "nevertheless",
 	"consequently", "also", "in addition", "moreover",
 	"accordingly", "essentially", "presumably", "actually",
 	"basically", "importantly", "clearly", "obviously",
@@ -1346,7 +1346,7 @@ lconjadv(void)
 X 
 conjsub(void)
 {
-	static char    *conjsublist[] = {"although", "even though",
+	static const char    *conjsublist[] = {"although", "even though",
 		"despite the fact that",
 		"for the simple reason that",
 		"because", "due to the fact that", "since",
@@ -1358,7 +1358,7 @@ conjsub(void)
 	return v;
 }
 
-static char    *lconjsublist[] = {"although", "even though",
+static const char    *lconjsublist[] = {"although", "even though",
 	"despite the fact that",
 	"because", "due to the fact that", "since",
 	"if", "anytime that", "in the case that",
@@ -1393,7 +1393,7 @@ lconjsub(void)
 	return v;
 }
 
-static char    *conjlist[] = {"and", "but", "yet", "and", "and"};
+static const char    *conjlist[] = {"and", "but", "yet", "and", "and"};
 
 X 
 conjugate(void)
@@ -1402,7 +1402,7 @@ conjugate(void)
 	v->list.s[0] = CHOOSE(conjlist);
 	return v;
 }
-static char    *nomzlist[] = {"it is easy to see that",
+static const char    *nomzlist[] = {"it is easy to see that",
 	"it is a basic fact that",
 	"it is obvious that", "it is not unimportant that",
 	"it is easy to overlook the fact that",
@@ -1551,7 +1551,7 @@ main(int argc, char *argv[])
 	static const char	*picelem[] = { "box", "ellipse", "box", "box"};
 	static const char	*piccon[] = { "arrow", "line", "line <-", "line <->",
 	"spline", "spline <-", "spline <->"};
-	static char	*picdir[] = { "right", "down right", "down",
+	static const char	*picdir[] = { "right", "down right", "down",
 	"left", "up left", "left", "down", "down right", NULL};
 	E               env;
 	X               tree;
@@ -1561,7 +1561,7 @@ main(int argc, char *argv[])
 	int             lim = 0;
 	long            t = 0;
     char            c;
-    char            **str;
+    const char      **str;
     int             junk;
     int             junk2;
 
@@ -1789,7 +1789,7 @@ pr(X tree)
 }
 
 void
-out(char *s)
+out(const char *s)
 {
     assert(s);
     assert(io < sizeof(buff));
